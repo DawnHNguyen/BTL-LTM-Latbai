@@ -5,17 +5,18 @@
  */
 package btl_gamelapbai;
 
+import controller.ServerControl;
+import view.ServerView;
+
 /**
  *
  * @author dolong
  */
 public class BTL_GameLapBai {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ServerView view
+                = new ServerView();
     }
     
 }
