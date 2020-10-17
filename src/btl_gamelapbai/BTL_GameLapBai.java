@@ -5,6 +5,8 @@
  */
 package btl_gamelapbai;
 
+import controller.ClientControl;
+
 /**
  *
  * @author dolong
@@ -15,7 +17,11 @@ public class BTL_GameLapBai {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+//        ClientView view = new ClientView();
+        ClientControl control = new ClientControl();
+        control.actionPerformed();
+//        view.setVisible(true);
+    
     }
     
 }
