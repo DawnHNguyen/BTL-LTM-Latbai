@@ -21,7 +21,8 @@ import java.sql.Statement;
  * @author thuc
  */
 public class ServerControl {
-     private Connection con;
+
+    private Connection con;
     private ServerSocket myServer;
     private int serverPort = 3001;
 

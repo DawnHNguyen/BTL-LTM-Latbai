@@ -5,10 +5,7 @@
  */
 package model;
 
-/**
- *
- * @authmạngor dolong
- */
+
 public class Account {
     private String userName;
     private String passWord;
