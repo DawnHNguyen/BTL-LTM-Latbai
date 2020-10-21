@@ -10,26 +10,58 @@ import model.User;
 
 public class ClientControl {
 
-//    private ClientView view;
-    private String serverHost = "192.168.1.152";
+    private Socket mySocket;
+    private String serverHost = "localhost";
     private int serverPort = 3001;
-    User user = new User();
 
-    public void actionPerformed() {
-        System.out.println("qwrrwqrqw");
-        try {
-            System.out.println("123");
-            Socket mySocket = new Socket(serverHost, serverPort);
-            ObjectOutputStream oos = new ObjectOutputStream(mySocket.getOutputStream());
-            oos.writeBytes("allooo");
-
-            ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
-            Object o = ois.readObject();
-            System.out.println(o);
-            mySocket.close();
-        } catch (Exception ex) {
-//                view.showMessage(ex.getStackTrace().toString());
-        }
+    public ClientControl() {
     }
 
+    public Socket openConnection() {
+        try {
+            mySocket = new Socket(serverHost, serverPort);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return mySocket;
+    }
+
+    public boolean sendData(String string) {
+        try {
+            System.out.println(string);
+            ObjectOutputStream oos = new ObjectOutputStream(mySocket.getOutputStream());
+            oos.writeObject(string);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public String receiveData() {
+        String result = null;
+        try {
+            ObjectInputStream ois
+                    = new ObjectInputStream(mySocket.getInputStream());
+            Object o = ois.readObject();
+            if (o instanceof String) {
+                result = (String) o;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return result;
+    }
+
+    public boolean closeConnection() {
+        try {
+            mySocket.close();
+        } catch (Exception ex) {
+            ex.printStackTrace(); 
+            return false;
+        }
+        return true;
+    }
 }

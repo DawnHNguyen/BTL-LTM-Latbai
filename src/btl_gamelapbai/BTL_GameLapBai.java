@@ -19,8 +19,8 @@ public class BTL_GameLapBai {
     public static void main(String[] args) {
 //        ClientView view = new ClientView();
         ClientControl control = new ClientControl();
-        control.actionPerformed();
-//        view.setVisible(true);
+        control.openConnection();
+        control.sendData("oke ban oi");
     
     }
     
