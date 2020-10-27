@@ -1,6 +1,6 @@
 package view;
 
-import controller.ServerControl;
+import controller.login.ServerControl;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

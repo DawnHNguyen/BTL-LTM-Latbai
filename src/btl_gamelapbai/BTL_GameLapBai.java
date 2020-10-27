@@ -5,7 +5,7 @@
  */
 package btl_gamelapbai;
 
-import controller.ServerControl;
+import controller.login.ServerControl;
 import view.ServerView;
 
 /**
