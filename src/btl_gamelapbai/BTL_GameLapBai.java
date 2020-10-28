@@ -15,8 +15,7 @@ import view.ServerView;
 public class BTL_GameLapBai {
 
     public static void main(String[] args) {
-        ServerView view
-                = new ServerView();
+        ServerView view = new ServerView();
     }
     
 }
