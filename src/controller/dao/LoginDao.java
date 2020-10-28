@@ -15,14 +15,13 @@ import model.Account;
  *
  * @author thuc
  */
-public class loginDao extends MainDao{
-    public loginDao () {
-        super() ;
+public class LoginDao extends MainDao{
+    public LoginDao () {
+        super();
     }
     
     public boolean checkLogin (Account acc ){
         Connection conn = super.getConnection();
-        
         try{
             PreparedStatement pre = conn.prepareStatement("select * from tblUser"  //table
                     + " where username = ? and password = ?");

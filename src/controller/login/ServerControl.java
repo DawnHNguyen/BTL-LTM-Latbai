@@ -6,7 +6,7 @@
 package controller.login;
 
 import controller.dao.MainDao;
-import controller.dao.loginDao;
+import controller.dao.LoginDao;
 import java.io.IOException;
 import model.Account;
 import java.io.ObjectInputStream;
@@ -29,28 +29,12 @@ public class ServerControl {
     private int serverPort = 3001;
 
     public ServerControl() {
-//        getDBConnection("demo_keo_tha", "root", "123456");
-        MainDao mainDao =new MainDao() ;
+//        MainDao mainDao =new MainDao() ;
         openServer(serverPort);
         while (true) {
             listenning();
         }
     }
-
-//    private void getDBConnection(String dbName, String username,
-//            String password) {
-//        String dbUrl = "jdbc:mysql://localhost:3306/" + dbName;
-//        String dbClass = "com.mysql.cj.jdbc.Driver";
-//        try {
-//            Class.forName(dbClass);
-//            con = DriverManager.getConnection(dbUrl,
-//                    username, password);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
-//        //connect db
-//    }
 
     private void openServer(int portNumber) {
         try {
@@ -67,34 +51,18 @@ public class ServerControl {
             ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
             Object o = ois.readObject();
             System.out.println(o);
-//            if (o instanceof Account) {
-//                Account account = (Account) o;
-//                if (checkUser(account)) {
-//                    oos.writeObject("ok");
-//                } else {
-//                    oos.writeObject("false");
-//                }
-//            }
+            LoginDao  loginDao =new LoginDao();
+            
+            if (o instanceof Account) {
+                Account account = (Account) o;
+                if (loginDao.checkLogin(account)) {
+                    oos.writeObject("ok");
+                } else {
+                    oos.writeObject("false");
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean checkUser(Account account) throws Exception {
-        loginDao login = new loginDao();
-        login.checkLogin(account) ;
-//        String query = "Select * FROM tblUser WHERE userName ='"
-//                + account.getUserName()
-//                + "' AND password ='" + account.getPassWord() + "'";
-//        try {
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(query);
-//            if (rs.next()) {
-//                return true;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return false;
     }
 }
