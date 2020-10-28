@@ -5,8 +5,10 @@
  */
 package model;
 
+import java.io.Serializable;
 
-public class Account {
+
+public class Account implements Serializable {
     private String userName;
     private String passWord;
 

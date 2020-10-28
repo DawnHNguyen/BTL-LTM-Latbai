@@ -45,22 +45,36 @@ public class ServerControl {
     }
 
     private void listenning() {
-        try {
-            Socket clientSocket = myServer.accept();
+//        try {
+//            Socket clientSocket = myServer.accept();
+//            ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+//            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+//            System.out.println("abcasasdasda");
+//
+//            Object o = ois.readObject();
+//            System.out.println("abcasasdasda");
+//            System.out.println(o);
+//            LoginDao loginDao = new LoginDao();
+//
+//            if (o instanceof Account) {
+//                Account account = (Account) o;
+//                if (loginDao.checkLogin(account)) {
+//                    oos.writeObject("ok");
+//                } else {
+//                    oos.writeObject("false");
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+try {
+           Socket clientSocket = myServer.accept();
             ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
             ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+            System.out.println("tao xin may");
             Object o = ois.readObject();
-            System.out.println(o);
-            LoginDao  loginDao =new LoginDao();
-            
-            if (o instanceof Account) {
-                Account account = (Account) o;
-                if (loginDao.checkLogin(account)) {
-                    oos.writeObject("ok");
-                } else {
-                    oos.writeObject("false");
-                }
-            }
+            System.out.println("chao anh em");
+           
         } catch (Exception e) {
             e.printStackTrace();
         }
