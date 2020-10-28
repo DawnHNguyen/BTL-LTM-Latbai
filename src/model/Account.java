@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 package model;
+import java.io.Serializable;
 
 /**
  *
  * @authmạngor dolong
  */
-public class Account {
+public class Account implements Serializable{
     private String userName;
     private String passWord;
 
