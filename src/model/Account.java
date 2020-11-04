@@ -6,18 +6,8 @@
 package model;
 import java.io.Serializable;
 
-<<<<<<< HEAD
-import java.io.Serializable;
-
-
 public class Account implements Serializable {
-=======
-/**
- *
- * @authmạngor dolong
- */
-public class Account implements Serializable{
->>>>>>> aef791e111ca5579223cfcd94d96dc1eaada62a6
+    private static final long serialVersionUID = 6529685098267757691L;
     private String userName;
     private String passWord;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dao;
+package controlle;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,9 +24,9 @@ public class MainDao {
             conn =DriverManager.getConnection(jdbcURL,
                     jdbcUsername, jdbcPassword) ;
         }catch(SQLException e){
-            System.out.println("SQL exception" +e);
+            e.printStackTrace();
         }catch(ClassNotFoundException e){
-            System.out.println("Not Found Exception " +e );
+            e.printStackTrace();
         }
     }
       public Connection getConnection(){

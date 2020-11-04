@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dao;
+package controlle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,12 +25,12 @@ public class LoginDao extends MainDao{
         try{
             PreparedStatement pre = conn.prepareStatement("select * from tblUser"  //table
                     + " where username = ? and password = ?");
-            pre.setString(0, acc.getUserName());
-            pre.setString(0, acc.getPassWord() );
+            pre.setString(1, acc.getUserName());
+            pre.setString(2, acc.getPassWord() );
             ResultSet rs = pre.executeQuery() ;
             if(rs.next())   return true ;
         }catch(SQLException e){
-            System.out.println("SQL exception " +e);
+           e.printStackTrace();
         }
         return false ;
     }

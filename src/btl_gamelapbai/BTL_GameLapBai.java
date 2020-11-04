@@ -5,7 +5,8 @@
  */
 package btl_gamelapbai;
 
-import controller.login.ServerControl;
+import controlle.ServerControl;
+import controlle.ThreadServer;
 import view.ServerView;
 
 /**
@@ -15,7 +16,8 @@ import view.ServerView;
 public class BTL_GameLapBai {
 
     public static void main(String[] args) {
-        ServerView view = new ServerView();
-    }
-    
+//        ServerView view = new ServerView();
+        Thread thread = new Thread(new ThreadServer());
+        thread.start();
+    }    
 }
