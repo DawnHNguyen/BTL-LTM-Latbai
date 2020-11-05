@@ -10,8 +10,8 @@ package model;
  * @author thuc
  */
 public enum Type {
-    ADD_STUDENT,
-    SEARCH_STUDENT_BY_NAME,
-    SEARCH_STUDENT_BY_YEAR,
-    RETURN_SEARCH
+    LOGIN,
+//    SEARCH_STUDENT_BY_NAME,
+//    SEARCH_STUDENT_BY_YEAR,
+//    RETURN_SEARCH
 }

@@ -34,11 +34,9 @@ public class ServerControl implements Runnable{
     private ArrayList<Account> listResult = new ArrayList<>();
 
     public ServerControl() {
-        System.out.println("da den day1");
     }
     
     public ServerControl(Socket clientSocket) {
-        System.out.println("da den day2");
         this.clientSocket =clientSocket ;
         try{
             ois = new ObjectInputStream(clientSocket.getInputStream());

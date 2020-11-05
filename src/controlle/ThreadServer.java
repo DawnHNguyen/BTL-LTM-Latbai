@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 
 /**
@@ -43,7 +45,7 @@ public class ThreadServer implements Runnable{
     public void run() {
         while(true){
             openServer();
-            while(!Thread.currentThread().interrupted()){
+            while(!Thread.currentThread().isInterrupted()){
                 try{
                 clientSocket =myServer.accept() ;
                 ServerControl sc=new ServerControl(clientSocket);
@@ -52,8 +54,6 @@ public class ThreadServer implements Runnable{
                     e.printStackTrace();
                 }
             }
-//            Thread.sleep(100);
-//            clientSocket.close();
         }
     }
 }
