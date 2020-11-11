@@ -5,7 +5,8 @@
  */
 package btl_gamelapbai;
 
-import controller.ClientControl;
+import controller.auth.LoginController;
+import view.auth.LoginView;
 
 /**
  *
@@ -17,11 +18,8 @@ public class BTL_GameLapBai {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        ClientView view = new ClientView();
-        ClientControl control = new ClientControl();
-        control.openConnection();
-        control.sendData("oke ban oi");
-    
+        LoginView loginView = new LoginView();
+        LoginController control = new LoginController(loginView);
     }
     
 }

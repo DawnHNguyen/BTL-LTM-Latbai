@@ -11,8 +11,14 @@ import java.io.Serializable;
  * @authmạngor dolong
  */
 public class Account implements Serializable{
+    private static final long serialVersionUID = 6529685098267757692L;
     private String userName;
     private String passWord;
+
+    public Account(String userName, String passWord) {
+        this.userName = userName;
+        this.passWord = passWord;
+    }
 
     public String getUserName() {
         return userName;
