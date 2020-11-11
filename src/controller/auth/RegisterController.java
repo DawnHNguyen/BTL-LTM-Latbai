@@ -20,6 +20,7 @@ public class RegisterController extends MainController {
     public RegisterController(RegisterView registerView) {
         super();
         this.registerView = registerView;
+        registerView.setVisible(true);
         this.registerView.addRegisterAction(new RegisterAction());
     }
 
@@ -27,20 +28,25 @@ public class RegisterController extends MainController {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            Account account = registerView.getAccount();
-            Message message = new Message(account, model.Type.REGISTER);
-            if (message instanceof Message) {
-                sendData(message);
-                Message result = receiveData();
-                if (result instanceof Message) {
-                    if (result.getType() != model.Type.LOGIN_SUCCESS) {
-                        JOptionPane.showMessageDialog(registerView, "User not available");
-                    } else {
-                        JOptionPane.showMessageDialog(registerView, "Login success");
-                    }
-                }
+            if (!registerView.checkPassword()) {
+                JOptionPane.showMessageDialog(registerView, "nhap lai di");
             } else {
-                JOptionPane.showMessageDialog(registerView, "Check your login!!");
+                Account account = registerView.getAccount();
+                Message message = new Message(account, model.Type.REGISTER);
+                System.out.println(message.getContent());
+                if (message instanceof Message) {
+                    sendData(message);
+                    Message result = receiveData();
+                    if (result instanceof Message) {
+                        if (result.getType() != model.Type.REGISTER_SUCCESS) {
+                            JOptionPane.showMessageDialog(registerView, "Register success");
+                        } else {
+                            JOptionPane.showMessageDialog(registerView, "Login success");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(registerView, "Check your login!!");
+                }
             }
         }
     }

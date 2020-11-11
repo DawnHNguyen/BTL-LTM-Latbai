@@ -5,6 +5,7 @@
  */
 package view.auth;
 
+import controller.auth.RegisterController;
 import view.auth.RegisterView;
 import java.awt.event.ActionListener;
 import model.Account;
@@ -112,7 +113,7 @@ public class LoginView extends javax.swing.JFrame {
 
     private void jbtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRegisterActionPerformed
         RegisterView registerView = new RegisterView();
-        registerView.setVisible(true);
+        RegisterController registerController = new RegisterController(registerView);
     }//GEN-LAST:event_jbtRegisterActionPerformed
 
     /**

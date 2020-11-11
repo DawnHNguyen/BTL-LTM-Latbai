@@ -20,6 +20,7 @@ public class MainController {
     private Socket mySocket;
 //    private String serverHost = "localhost";
     private String serverHost = "192.168.43.57";
+//    private String serverHost = "172.19.201.17";
     private int serverPort = 3001;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;

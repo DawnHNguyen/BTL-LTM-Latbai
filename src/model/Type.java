@@ -12,7 +12,9 @@ package model;
 public enum Type {
     LOGIN,
     LOGOUT,
-    REGISTER,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    REGISTER,
+    REGISTER_SUCCESS,
+
 }

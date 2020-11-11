@@ -5,15 +5,23 @@
  */
 package model;
 
+import java.util.Vector;
+
 
 public class User {
     private String name;
     private int point;
-    private boolean status;
+    private String status;
     private Account account;
 
     public Account getAccount() {
         return account;
+    }
+
+    public User(String name, int point, String status) {
+        this.name = name;
+        this.point = point;
+        this.status = status;
     }
 
     public void setAccount(Account account) {
@@ -35,12 +43,16 @@ public class User {
         this.point = point;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Object[] toObjects() {
+        return new Object[]{name,point,status};
     }
     
 }

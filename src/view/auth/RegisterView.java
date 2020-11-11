@@ -119,12 +119,10 @@ public class RegisterView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRegisterActionPerformed
-        if(!checkPassword()){
-            JOptionPane.showMessageDialog(this,"nahp la");
-        }
     }//GEN-LAST:event_jbtRegisterActionPerformed
 
     public void addRegisterAction(ActionListener al){
+        System.out.println("okee");
         jbtRegister.addActionListener(al);
     }
     public boolean checkPassword(){
