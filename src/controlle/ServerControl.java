@@ -5,8 +5,9 @@
  */
 package controlle;
 
-import controlle.MainDao;
-import controlle.LoginDao;
+import controlle.dao.MainDao;
+import controlle.dao.LoginDao;
+import controlle.dao.RegisterDao;
 import java.io.IOException;
 import model.Account;
 import java.io.ObjectInputStream;
@@ -18,14 +19,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Message;
+import model.Type;
 
 /**
  *
  * @author thuc
  */
-public class ServerControl implements Runnable{
+public class ServerControl implements Runnable {
 
     private Connection con;
+    private LoginDao loginDao ;
+    private RegisterDao registerDao ;
     private ServerSocket myServer;
     private int serverPort = 3001;
     Socket clientSocket;
@@ -35,74 +42,57 @@ public class ServerControl implements Runnable{
 
     public ServerControl() {
     }
-    
+
     public ServerControl(Socket clientSocket) {
-        this.clientSocket =clientSocket ;
-        try{
+        this.clientSocket = clientSocket;
+        loginDao = new LoginDao();
+        registerDao =new RegisterDao() ;
+        try {
             ois = new ObjectInputStream(clientSocket.getInputStream());
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-//        MainDao mainDao =new MainDao() ;
-//        openServer(serverPort);
-//        while (true) {
-//            listenning();
-//        }
     }
-
-//    private void openServer(int portNumber) {
-//        try {
-//            myServer = new ServerSocket(portNumber);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private void listenning() {
-//        System.out.println("da den listenning");
-//        try {
-////            Socket clientSocket = myServer.accept();
-////            ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
-////            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-//            Object o = ois.readObject();
-//            System.out.println("tai khoan " +o);
-//            LoginDao  loginDao =new LoginDao();
-//            
-//            if (o instanceof Account) {
-//                Account account = (Account) o;
-//                if (loginDao.checkLogin(account)) {
-//                    oos.writeObject("ok");
-//                } else {
-//                    oos.writeObject("false");
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public void run() {
-       System.out.println("da den listenning");
         try {
-//            Socket clientSocket = myServer.accept();
-//            ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
-//            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-            Object o = ois.readObject();
-            System.out.println("tai khoan " +o);
-            LoginDao  loginDao =new LoginDao();
-            
-            if (o instanceof Account) {
-                Account account = (Account) o;
-                if (loginDao.checkLogin(account)) {
-                    oos.writeObject("ok");
-                } else {
-                    oos.writeObject("false");
+            while (!Thread.currentThread().isInterrupted()) {
+                Object o = ois.readObject();
+                if (o instanceof Message) {
+                    Message mesSend = new Message();
+                    Message mesReceive = (Message) o;
+                    Account acc = (Account) mesReceive.getContent();
+                    if (mesReceive.getType() == Type.LOGIN){
+                        Account checkAcc = loginDao.checkLogin(acc);
+                        if (checkAcc !=null) {
+                            mesSend = new Message(checkAcc, Type.LOGIN_SUCCESS);
+                        }
+                        else{
+                            mesSend = new Message(checkAcc, Type.LOGIN_FAILL);
+                        }
+                    }
+                    else if (mesReceive.getType() == Type.REGISTER) {
+                        Account addAcc = registerDao.CreateAccount(acc);
+                        mesSend = new Message(addAcc, Type.REGISTER_SUCCESS);
+                    }
+                    oos.writeObject(mesSend);
                 }
+
+                Thread.sleep(100);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            try {
+                ois.close();
+                oos.close();
+                clientSocket.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
         }
     }
+
 }

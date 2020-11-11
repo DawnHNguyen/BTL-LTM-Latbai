@@ -11,7 +11,11 @@ package model;
  */
 public enum Type {
     LOGIN,
-//    SEARCH_STUDENT_BY_NAME,
-//    SEARCH_STUDENT_BY_YEAR,
-//    RETURN_SEARCH
+    LOGIN_SUCCESS,
+    LOGIN_FAILL,
+    
+    REGISTER,
+    REGISTER_SUCCESS,
+    REGISTER_FAILL,
+
 }

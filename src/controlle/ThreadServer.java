@@ -5,6 +5,7 @@
  */
 package controlle;
 
+import controlle.dao.MainDao;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -44,15 +45,23 @@ public class ThreadServer implements Runnable{
     @Override
     public void run() {
         while(true){
-            openServer();
-            while(!Thread.currentThread().isInterrupted()){
-                try{
-                clientSocket =myServer.accept() ;
-                ServerControl sc=new ServerControl(clientSocket);
-                new Thread(sc).start();
-                }catch(IOException e){
-                    e.printStackTrace();
+            try {
+                openServer();
+                while(!Thread.currentThread().isInterrupted()){
+                    try{
+                        clientSocket =myServer.accept() ;
+                        ServerControl sc=new ServerControl(clientSocket);
+                        new Thread(sc).start();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
                 }
+                Thread.sleep(100);
+                clientSocket.close();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ThreadServer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadServer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

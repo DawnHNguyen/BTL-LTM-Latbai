@@ -7,6 +7,7 @@ package model;
 
 
 public class User {
+    private static final long serialVersionUID = 6529685098267757691L;
     private String name;
     private int point;
     private boolean status;
