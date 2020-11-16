@@ -5,22 +5,67 @@
  */
 package view.game;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
 
 /**
  *
  * @author dolong
  */
-public class PlayingGame extends javax.swing.JFrame {
+public class PlayingGame extends javax.swing.JFrame implements ActionListener {
+    int count = 0, id, preX, preY, X, Y;
+    int level = 0, hit = 0, h;
+    private int item = 16;                       // Số lượng icon 10x10
+    private JButton[][] btnImage;                // Mảng các icon
+    private int[][] map;                          // Map đang sử dụng 
+    private int a[][] = new int[10][10];
+    int maxXY = 100;
+    private boolean tick[][] =   new boolean[maxXY][maxXY];
+    private JProgressBar progressTime;
+    private JButton score_bt;
+    private int m = 4;      //Matrix mxn
+    private int n = 4;
+    int maxTime = 30, time = 0;
 
-    /**
-     * Creates new form PlayingGame
-     */
+    Timer timer, timer2;
+
     public PlayingGame() {
         initComponents();
-        jButton1.setIcon(getIcon());
+        this.pack();
+        timer = new Timer(240, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                open();
+                timer.stop();
+            }
+        });
+
+        timer2 = new Timer(100, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                time++;
+                progressTime.setValue(maxTime - time);
+                if (maxTime == time) {
+                    timer2.stop();
+                    showDialogNewGame("Hết thời gian.\n"
+                            //                            + "Điểm: " + score_bt.getText() + "\n"
+                            + "Bạn có muốn chơi lại không?", "Thông báo");
+                }
+            }
+        });
+        createMatrix();
+        createFarme_Main();
+
     }
 
     /**
@@ -37,6 +82,7 @@ public class PlayingGame extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         jFrame4 = new javax.swing.JFrame();
         jButton1 = new javax.swing.JButton();
+        PanelMain = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -86,20 +132,39 @@ public class PlayingGame extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
+        PanelMain.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
+        PanelMain.setLayout(PanelMainLayout);
+        PanelMainLayout.setHorizontalGroup(
+            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 797, Short.MAX_VALUE)
+        );
+        PanelMainLayout.setVerticalGroup(
+            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 473, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 506, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(jButton1)
-                .addContainerGap(237, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         pack();
@@ -109,30 +174,7 @@ public class PlayingGame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PlayingGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PlayingGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PlayingGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PlayingGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PlayingGame().setVisible(true);
@@ -140,13 +182,168 @@ public class PlayingGame extends javax.swing.JFrame {
         });
     }
 
-    private Icon getIcon() {
-        int width = 120, height = 170;
-        Image image = new ImageIcon(getClass().getResource("https://codelearn.io/Media/Default/Users/HaiZuka/HaiZuka/lathinh2.png")).getImage();
-        Icon icon = new ImageIcon(image.getScaledInstance(width, height, image.SCALE_SMOOTH));
+    public void createFarme_Main() {
+        PanelMain.setLayout(new GridLayout(m, n, 0, 0));
+        PanelMain.setBackground(Color.LIGHT_GRAY);
+        btnImage = new JButton[4][4];
+        addImage();
+    }
+
+    private Icon getIcon(int index) {
+//        int width = 120, height = 120;
+
+        int width = this.getWidth()/n, height = this.getHeight()/m;
+//        Image image = new ImageIcon(getClass().getResource("images//item" + index + ".jpg")).getImage();
+        Image image = new ImageIcon("images//item" + index + ".jpg").getImage();
+        Icon icon = new ImageIcon(image.getScaledInstance(width, height, image.SCALE_AREA_AVERAGING));
         return icon;
     }
+    private Image getImage(int index) {
+        int width = this.getWidth()/n, height = this.getHeight()/m;
+//        Image image = new ImageIcon(getClass().getResource("images//item" + index + ".jpg")).getImage();
+        Image image = new ImageIcon("images//item" + index + ".jpg").getImage();
+//        Icon icon = new ImageIcon(image.getScaledInstance(width, height, image.SCALE_AREA_AVERAGING));
+        return image;
+    }
+    public void createMatrix() {
+        int images = 14;
+        int N = m * n;
+        int b[] = new int[m * n + images];
+        int c[] = new int[m * n + images];
+        for (int i = 0; i < images; i++) {
+            b[i] = i;
+            c[i] = (int) (Math.random() * 1000000);
+        }
+        for (int i = 0; i < images - 1; i++) {
+            for (int j = i + 1; j < images; j++) {
+                if (c[i] > c[j]) {
+                    int tmp = b[i];
+                    b[i] = b[j];
+                    b[j] = tmp;
+                    tmp = c[i];
+                    c[i] = c[j];
+                    c[j] = tmp;
+                }
+            }
+        }
+        for (int i = N / 2; i < N; i++) {
+            b[i] = b[i - N / 2];
+        }
+        for (int i = 0; i < m * n; i++) {
+            c[i] = (int) (Math.random() * 1000000);
+        }
+        for (int i = 0; i < N - 1; i++) {
+            for (int j = i + 1; j < N; j++) {
+                if (c[i] > c[j]) {
+                    int tmp = b[i];
+                    b[i] = b[j];
+                    b[j] = tmp;
+                    tmp = c[i];
+                    c[i] = c[j];
+                    c[j] = tmp;
+                }
+            }
+        }
+        N = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                a[i][j] = b[N++];
+            }
+        }
+    }
+
+    public void addImage() {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                btnImage[i][j] = new JButton();
+//                btnImage[i][j].setBorder(BorderFactory.createEmptyBorder());
+//                btnImage[i][j].setMargin(new Insets(0, 0, 0, 0));
+//                btnImage[i][j].setSize(new Dimension(100, 100));
+
+                System.out.println(btnImage[i][j].getSize().width+" - "+btnImage[i][j].getSize().height);
+                Image scaled = getImage(a[i][j]).getScaledInstance(this.getWidth()/n, this.getHeight()/m, java.awt.Image.SCALE_SMOOTH);
+//                System.out.println(btnImage[])
+//                btnImage[i][j].setIcon(getIcon(a[i][j]));
+                btnImage[i][j].setIcon(new ImageIcon(scaled));
+                                PanelMain.add(btnImage[i][j]);
+            }
+        }
+    }
+
+    public void open() {
+        if (id == a[X][Y]) {
+            btnImage[preX][preY].setIcon(getIcon(-1));
+            a[X][Y] = a[preX][preY] = 0;
+            tick[X][Y] = tick[preX][preY] = false;
+            btnImage[X][Y].setBorder(null);
+            btnImage[preX][preY].setBorder(null);
+            showMatrix();
+            btnImage[X][Y].setIcon(getIcon(-1));
+            score_bt.setText(String.valueOf(Integer.parseInt(score_bt.getText()) + 100));
+            hit++;
+            if (hit == m * n / 2) {
+                timer.stop();
+                timer2.stop();
+//				nextGame();
+            }
+        } else {
+            btnImage[preX][preY].setIcon(getIcon(0));
+            btnImage[X][Y].setIcon(getIcon(0));
+            tick[preX][preY] = true;
+            tick[X][Y] = true;
+            score_bt.setText(String.valueOf(Integer.parseInt(score_bt.getText()) - 10));
+        }
+    }
+
+    public void showDialogNewGame(String message, String title) {
+        int select = JOptionPane.showOptionDialog(null, message, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                null, null);
+        if (select == 0) {
+//			newGame();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    public void showMatrix() {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.printf("%3d", a[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("-----------------");
+        System.out.println();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        timer2.start();
+        // TODO Auto-generated method stub
+        int i, j;
+        String s = e.getActionCommand();
+        int k = s.indexOf(32);
+        i = Integer.parseInt(s.substring(0, k));
+        j = Integer.parseInt(s.substring(k + 1, s.length()));
+        if (tick[i][j]) {
+            tick[i][j] = false;
+            if (count == 0) {
+                btnImage[i][j].setIcon(getIcon(a[i][j]));
+                id = a[i][j];
+                preX = i;
+                preY = j;
+            } else {
+                btnImage[i][j].setIcon(getIcon(a[i][j]));
+                X = i;
+                Y = j;
+                timer.start();
+            }
+            count = 1 - count;
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelMain;
     private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
