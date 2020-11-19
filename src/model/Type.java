@@ -5,6 +5,8 @@
  */
 package model;
 
+import controlle.dao.ListOnlineDao;
+
 /**
  *
  * @author thuc
@@ -13,6 +15,8 @@ public enum Type {
     LOGIN,
     LOGIN_SUCCESS,
     LOGIN_FAILL,
+    
+    LISTONLINE,
     
     REGISTER,
     REGISTER_SUCCESS,

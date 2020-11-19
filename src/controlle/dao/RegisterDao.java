@@ -23,7 +23,6 @@ public class RegisterDao extends MainDao{
     public Account CreateAccount(Account acc){
         Connection conn =getConnection() ;
         try {
-            System.out.println("da den dang nhap");
             PreparedStatement pre = conn.prepareStatement(
                     "insert into tblUser(username,password) value(?,?)");
             pre.setString(1,acc.getUserName());

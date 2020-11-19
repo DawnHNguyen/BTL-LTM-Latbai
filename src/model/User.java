@@ -10,7 +10,6 @@ public class User {
     private static final long serialVersionUID = 6529685098267757691L;
     private String name;
     private int point;
-    private boolean status;
     private Account account;
 
     public Account getAccount() {
@@ -34,14 +33,5 @@ public class User {
 
     public void setPoint(int point) {
         this.point = point;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-    
+    }   
 }

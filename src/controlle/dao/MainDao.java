@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author thuc
  */
 public class MainDao {
-    private Connection conn ;
+    Connection conn ;
     private String jdbcURL="jdbc:mysql://localhost:3306/demo_keo_tha" ;
     private String jdbcUsername = "root" ;
     private String jdbcPassword ="123456" ;

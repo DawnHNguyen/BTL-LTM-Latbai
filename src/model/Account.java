@@ -10,6 +10,22 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 6529685098267757692L;
     private String userName;
     private String passWord;
+    private int status ;
+
+    public Account() {
+    }
+
+    public Account(String userName, String passWord, int status) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.status = status;
+    }
+
+    public Account(String userName, String passWord) {
+        this.userName = userName;
+        this.passWord = passWord;
+    }
+    
 
     public String getUserName() {
         return userName;
@@ -25,6 +41,14 @@ public class Account implements Serializable {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
     
 }
