@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 6529685098267757691L;
+    private static final long serialVersionUID = 1L;
     private Object content;
     private Type type;
 

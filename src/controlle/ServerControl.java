@@ -5,6 +5,7 @@
  */
 package controlle;
 
+import controlle.dao.ListOnlineDao;
 import controlle.dao.MainDao;
 import controlle.dao.LoginDao;
 import controlle.dao.RegisterDao;
@@ -23,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Message;
 import model.Type;
+import model.User;
 
 /**
  *
@@ -31,14 +33,15 @@ import model.Type;
 public class ServerControl implements Runnable {
 
     private Connection con;
-    private LoginDao loginDao ;
-    private RegisterDao registerDao ;
+    private LoginDao loginDao;
+    private RegisterDao registerDao;
+    private ListOnlineDao listOnline;
     private ServerSocket myServer;
     private int serverPort = 3001;
+    private ArrayList<User> listResult = new ArrayList<>();
     Socket clientSocket;
     ObjectInputStream ois;
     ObjectOutputStream oos;
-    private ArrayList<Account> listResult = new ArrayList<>();
 
     public ServerControl() {
     }
@@ -46,7 +49,8 @@ public class ServerControl implements Runnable {
     public ServerControl(Socket clientSocket) {
         this.clientSocket = clientSocket;
         loginDao = new LoginDao();
-        registerDao =new RegisterDao() ;
+        registerDao = new RegisterDao();
+        listOnline = new ListOnlineDao();
         try {
             ois = new ObjectInputStream(clientSocket.getInputStream());
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -64,18 +68,22 @@ public class ServerControl implements Runnable {
                     Message mesSend = new Message();
                     Message mesReceive = (Message) o;
                     Account acc = (Account) mesReceive.getContent();
-                    if (mesReceive.getType() == Type.LOGIN){
-                        Account checkAcc = loginDao.checkLogin(acc);
-                        if (checkAcc !=null) {
+
+                    if (mesReceive.getType() == Type.LOGIN) {
+                        User checkAcc = loginDao.checkLogin(acc);
+                        System.out.println("data.."+checkAcc);
+                        if (checkAcc != null) {
                             mesSend = new Message(checkAcc, Type.LOGIN_SUCCESS);
+                        } else {
+                            mesSend = new Message(checkAcc, Type.LOGIN_FAIL);
                         }
-                        else{
-                            mesSend = new Message(checkAcc, Type.LOGIN_FAILL);
-                        }
-                    }
-                    else if (mesReceive.getType() == Type.REGISTER) {
+                    } else if (mesReceive.getType() == Type.REGISTER) {
                         Account addAcc = registerDao.CreateAccount(acc);
                         mesSend = new Message(addAcc, Type.REGISTER_SUCCESS);
+                    } else if (mesReceive.getType() == Type.LIST_ONLINE) {
+                        listResult = listOnline.listOnline();
+                        mesSend = new Message(listResult, Type.LIST_ONLINE);
+
                     }
                     oos.writeObject(mesSend);
                 }

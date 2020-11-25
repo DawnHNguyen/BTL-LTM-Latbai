@@ -5,20 +5,26 @@
  */
 package model;
 
+import java.io.Serializable;
 
-public class User {
-    private static final long serialVersionUID = 6529685098267757691L;
+
+public class User implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String name;
     private int point;
+    private int status ;
     private Account account;
 
-    public Account getAccount() {
-        return account;
+    public User() {
     }
 
-    public void setAccount(Account account) {
+    public User(String name, int point, int status, Account account) {
+        this.name = name;
+        this.point = point;
+        this.status = status;
         this.account = account;
     }
+
     public String getName() {
         return name;
     }
@@ -33,5 +39,23 @@ public class User {
 
     public void setPoint(int point) {
         this.point = point;
-    }   
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+       
 }

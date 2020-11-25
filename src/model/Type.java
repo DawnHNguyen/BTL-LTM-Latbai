@@ -14,9 +14,9 @@ import controlle.dao.ListOnlineDao;
 public enum Type {
     LOGIN,
     LOGIN_SUCCESS,
-    LOGIN_FAILL,
+    LOGIN_FAIL,
     
-    LISTONLINE,
+    LIST_ONLINE,
     
     REGISTER,
     REGISTER_SUCCESS,

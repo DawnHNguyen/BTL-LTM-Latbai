@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Account;
+import model.User;
 
 /**
  *
@@ -22,7 +23,8 @@ public class LoginDao extends MainDao {
         Connection conn = getConnection();
     }
 
-    public Account checkLogin(Account acc) {
+    public User checkLogin(Account acc) {
+        User user = new User();
         try {
             PreparedStatement pre = conn.prepareStatement("select * from tblAccount" //table
                     + " where username = ? and password = ?");
@@ -30,24 +32,45 @@ public class LoginDao extends MainDao {
             pre.setString(2, acc.getPassWord());
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
-                setStatus(acc);
-                return acc;
+                int idAccount = rs.getInt("id");      
+                setStatus(idAccount);
+                user = getUser(acc);
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return user;
     }
 
-    public void setStatus(Account acc) {
-        try{
-            PreparedStatement pre = conn.prepareStatement("update tblAccount set status=1" //table
-                + " where username = ? and password = ?");
-        pre.setString(1, acc.getUserName());
-        pre.setString(2, acc.getPassWord());
-        pre.executeUpdate();
-        }catch(SQLException e){
+    public void setStatus(int idAccount) {
+        try {
+            PreparedStatement pre = conn.prepareStatement("update tblUser set status= 1" //table
+                    + " where id_account = ?");
+            pre.setInt(1, idAccount);
+            pre.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getUser(Account acc) {
+        User user = new User();
+        try {
+            PreparedStatement pre = conn.prepareStatement("SELECT tblUser.name, tblUser.point FROM tblAccount, tblUser\n"
+                    + "WHERE tblUser.id_account = tblAccount.id and tblAccount.username = ?");
+            pre.setString(1, acc.getUserName());
+            ResultSet rs = pre.executeQuery();
+             if (rs.next()) {
+                 user.setName(rs.getString(1));
+                 user.setPoint(rs.getInt(2));
+                 user.setStatus(0);
+                 user.setAccount(acc);
+                 return user;
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

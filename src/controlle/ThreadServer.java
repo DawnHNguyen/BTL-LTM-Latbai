@@ -30,7 +30,6 @@ public class ThreadServer implements Runnable{
     ObjectInputStream ois =null ;
     
     public ThreadServer(){
-        
     }
    
     
