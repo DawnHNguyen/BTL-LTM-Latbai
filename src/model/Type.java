@@ -20,6 +20,8 @@ public enum Type {
     
     REGISTER,
     REGISTER_SUCCESS,
-    REGISTER_FAILL,
+    REGISTER_NAME,
+    REGISTER_NAME_SUCCESS,
+    REGISTER_FAIL,
 
 }

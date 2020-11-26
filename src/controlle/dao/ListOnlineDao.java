@@ -37,7 +37,6 @@ public class ListOnlineDao extends MainDao {
                 user.setPoint(rs.getInt("point"));
                 user.setStatus(rs.getInt("status"));
                 listUser.add(user);
-                System.out.println("lisAcc..." +listUser);
             }
             
         } catch (SQLException e) {
