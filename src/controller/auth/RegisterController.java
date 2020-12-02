@@ -29,19 +29,21 @@ public class RegisterController extends MainController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             if (!registerView.checkPassword()) {
-                JOptionPane.showMessageDialog(registerView, "nhap lai di");
+                JOptionPane.showMessageDialog(registerView, "Mat khau phai trung nhau");
             } else {
                 Account account = registerView.getAccount();
                 Message message = new Message(account, model.Type.REGISTER);
-                System.out.println(message.getContent());
                 if (message instanceof Message) {
                     sendData(message);
                     Message result = receiveData();
                     if (result instanceof Message) {
-                        if (result.getType() != model.Type.REGISTER_SUCCESS) {
+                        if (result.getType() == model.Type.REGISTER_SUCCESS) {
                             JOptionPane.showMessageDialog(registerView, "Register success");
+                            Account acc = (Account)result.getContent();
+                            System.out.println("user name is"+ acc.getUserName());
+                            registerView.dispose();
                         } else {
-                            JOptionPane.showMessageDialog(registerView, "Login success");
+                            JOptionPane.showMessageDialog(registerView, "Registern not success");                            
                         }
                     }
                 } else {

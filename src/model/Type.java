@@ -14,7 +14,11 @@ public enum Type {
     LOGOUT,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    
     REGISTER,
+    REGISTER_NAME,
     REGISTER_SUCCESS,
+    
+    LIST_ONLINE,
 
 }

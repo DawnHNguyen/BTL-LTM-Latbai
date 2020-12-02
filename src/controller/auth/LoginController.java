@@ -6,6 +6,7 @@
 package controller.auth;
 
 import controller.MainController;
+import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -19,7 +20,8 @@ import view.auth.LoginView;
  */
 public class LoginController extends MainController{
     private LoginView loginView;
-
+    private HomePageController homePageController;
+    
     public LoginController(LoginView loginView) {
         super();
         this.loginView = loginView;
@@ -31,16 +33,23 @@ public class LoginController extends MainController{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            System.out.println("123");
             Account account = loginView.getAccount();
+            System.out.println("username "+account.getUserName());
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
                 sendData(message);
                 Message result = receiveData();
+                System.out.println(result.getType());
                 if (result instanceof Message) {
                     if (result.getType() != model.Type.LOGIN_SUCCESS) {
                         JOptionPane.showMessageDialog(loginView, "User not available");
                     } else {
                         JOptionPane.showMessageDialog(loginView, "Login success");
+                        Account acc = (Account)result.getContent();
+                        System.out.println("ID"+acc.getId());
+                        homePageController = new HomePageController(acc);
+                        loginView.setVisible(false);
                     }
                 }
             } else {

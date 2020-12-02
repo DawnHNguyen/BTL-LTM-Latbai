@@ -5,11 +5,14 @@
  */
 package view.homepage;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.User;
+import model.Account;
 
 /**
  *
@@ -18,20 +21,38 @@ import model.User;
 public class HomePageView extends javax.swing.JFrame {
 
     DefaultTableModel model;
-    ArrayList<User> listUsers;
+    ArrayList<Account> listUsers;
 
     public HomePageView() {
         initComponents();
-
+        this.setLocationRelativeTo(null);
+        setTable(listUsers);
     }
 
-    public HomePageView(ArrayList<User> listUsers) {
+    public HomePageView(ArrayList<Account> listUsers) {
         initComponents();
+        this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         setTable(listUsers);
     }
-
+    
+    public void addLogoutAcction(ActionListener al){
+        jbtLogout.addActionListener(al);
+    }
+    public void addInviteAcction(ActionListener al){
+        jbtInvite.addActionListener(al);
+    }
+    public Account getAccountSelected(){
+        Account acc = new Account();
+        int row = tblUser.getSelectedRow();
+        acc = listUsers.get(row);
+        System.out.println(row+ " "+ acc.getId()+" "+acc.getName());
+        return acc;
+    }
+    public void showMessage(String mess){
+        JOptionPane.showMessageDialog(this, mess);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,8 +65,8 @@ public class HomePageView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUser = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbtInvite = new javax.swing.JButton();
+        jbtLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,11 +78,11 @@ public class HomePageView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Rank", "Player", "Point", "Status"
+                "Rank", "Player", "Point"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -70,14 +91,19 @@ public class HomePageView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblUser);
 
-        jButton1.setBackground(new java.awt.Color(10, 97, 226));
-        jButton1.setText("Invite");
-
-        jButton2.setBackground(new java.awt.Color(233, 18, 18));
-        jButton2.setText("Logout");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbtInvite.setBackground(new java.awt.Color(10, 97, 226));
+        jbtInvite.setText("Invite");
+        jbtInvite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbtInviteActionPerformed(evt);
+            }
+        });
+
+        jbtLogout.setBackground(new java.awt.Color(233, 18, 18));
+        jbtLogout.setText("Logout");
+        jbtLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtLogoutActionPerformed(evt);
             }
         });
 
@@ -86,18 +112,20 @@ public class HomePageView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                .addComponent(jButton2))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(209, 209, 209)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtInvite, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtLogout))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,26 +134,35 @@ public class HomePageView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel1))
-                    .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jbtLogout)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jbtInvite)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbtLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLogoutActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jbtLogoutActionPerformed
 
-    public void setTable(List<User> list) {
+    private void jbtInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInviteActionPerformed
+//        Account acc = getAccountSelected();
+        
+    }//GEN-LAST:event_jbtInviteActionPerformed
+
+    public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {
-            for (User user : list) {
-                model.addRow(user.toObjects());
+            int i = 1;
+            for (Account user : list) {
+                System.out.println(user.getId());
+                model.addRow(user.toObjects(i++));
             }
         }
     }
@@ -164,10 +201,10 @@ public class HomePageView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtInvite;
+    private javax.swing.JButton jbtLogout;
     private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 
