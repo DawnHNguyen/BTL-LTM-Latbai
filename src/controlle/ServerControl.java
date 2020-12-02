@@ -38,7 +38,7 @@ public class ServerControl implements Runnable {
     private ListOnlineDao listOnline;
     private ServerSocket myServer;
     private int serverPort = 3001;
-    private ArrayList<User> listResult = new ArrayList<>();
+    private ArrayList<Account> listResult = new ArrayList<>();
     Socket clientSocket;
     ObjectInputStream ois;
     ObjectOutputStream oos;
@@ -67,33 +67,35 @@ public class ServerControl implements Runnable {
                 if (o instanceof Message) {
                     Message mesSend = new Message();
                     Message mesReceive = (Message) o;
-//                    Account acc = (Account) mesReceive.getContent();
-//                    User user =(User) mesReceive.getContent() ;
+                    Account acc = (Account) mesReceive.getContent();
 
-                    if (mesReceive.getType() == Type.LOGIN) {
-                        Account acc = (Account) mesReceive.getContent();
-                        User checkAcc = loginDao.checkLogin(acc);
-                        System.out.println("data.." + checkAcc);
-                        if (checkAcc != null) {
-                            mesSend = new Message(checkAcc, Type.LOGIN_SUCCESS);
-                        } else {
-                            mesSend = new Message(checkAcc, Type.LOGIN_FAIL);
-                        }
-                    } else if (mesReceive.getType() == Type.REGISTER) {
-                        Account acc = (Account) mesReceive.getContent();
-                        Account addAcc = registerDao.createAccount(acc);
-                        mesSend = new Message(addAcc, Type.REGISTER_SUCCESS);
-                    } else if (mesReceive.getType() == Type.LIST_ONLINE) {
-                        listResult = listOnline.listOnline();
-                        mesSend = new Message(listResult, Type.LIST_ONLINE);
+                    switch (mesReceive.getType()) {
+                        case LOGIN:
+                            System.out.println("yeu cau login");
+                            Account checkAcc = loginDao.checkLogin(acc);
+                            if (checkAcc != null) {
+                                mesSend = new Message(checkAcc, Type.LOGIN_SUCCESS);
+                            } else {
+                                mesSend = new Message(checkAcc, Type.LOGIN_FAIL);
+                            }
+                            break;
+                        case LOGOUT:
+                            System.out.println("id..."+acc.getId());
+                            loginDao.setStatus(acc.getId(), 0);
+                            break;
 
-                    } 
-                    
-                    else if (mesReceive.getType() == Type.REGISTER_NAME) {
-                        User user = (User) mesReceive.getContent();
-                        registerDao.createUser(user);
-                        listResult = listOnline.listOnline();
-                        mesSend = new Message(listResult, Type.REGISTER_SUCCESS);
+                        case REGISTER:
+                            Account addAcc = registerDao.createAccount(acc);
+                            if (addAcc != null) {
+                                mesSend = new Message(addAcc, Type.REGISTER_SUCCESS);
+                            } else {
+                                mesSend = new Message(addAcc, Type.REGISTER_FAIL);
+                            }
+                            break;
+                        case LIST_ONLINE:
+                            listResult = listOnline.listOnline(acc);
+                            mesSend = new Message(listResult, Type.LIST_ONLINE);
+                            break;
                     }
                     oos.writeObject(mesSend);
                 }

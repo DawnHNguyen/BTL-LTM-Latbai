@@ -15,13 +15,14 @@ public enum Type {
     LOGIN,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT,
     
     LIST_ONLINE,
     
     REGISTER,
     REGISTER_SUCCESS,
-    REGISTER_NAME,
-    REGISTER_NAME_SUCCESS,
     REGISTER_FAIL,
+    
+    PLAYER_1,
 
 }

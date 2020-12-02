@@ -25,24 +25,29 @@ public class ListOnlineDao extends MainDao {
         super();
         Connection conn = getConnection();
     }
-    
-    public ArrayList<User> listOnline() {
-        ArrayList<User> listUser = new ArrayList<>();
-        try {            
-            PreparedStatement pre = conn.prepareStatement("select * from tblUser where status = 1");
+
+    public ArrayList<Account> listOnline(Account account) {
+        ArrayList<Account> listAccount = new ArrayList<>();
+        try {
+            PreparedStatement pre = conn.prepareStatement("select * from tblAccount where status = 1 "
+                    + "and id != ?");
+            pre.setInt(1, account.getId());
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                User user = new User() ;
-                user.setName(rs.getString("name"));
-                user.setPoint(rs.getInt("point"));
-                user.setStatus(rs.getInt("status"));
-                listUser.add(user);
+                Account acc = new Account();
+                acc.setUserName(rs.getString("username"));
+                acc.setPassWord(rs.getString("password"));
+                acc.setName(rs.getString("name"));
+                acc.setPoint(rs.getInt("point"));
+                acc.setStatus(rs.getInt("status"));
+                acc.setId(rs.getInt("id"));
+                listAccount.add(acc);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listUser;
-        
+        return listAccount;
+
     }
 }

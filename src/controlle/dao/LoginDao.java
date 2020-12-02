@@ -23,8 +23,7 @@ public class LoginDao extends MainDao {
         Connection conn = getConnection();
     }
 
-    public User checkLogin(Account acc) {
-        User user = new User();
+    public Account checkLogin(Account acc) {
         try {
             PreparedStatement pre = conn.prepareStatement("select * from tblAccount" //table
                     + " where username = ? and password = ?");
@@ -33,44 +32,25 @@ public class LoginDao extends MainDao {
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 int idAccount = rs.getInt("id");      
-                setStatus(idAccount);
-                user = getUser(acc);
-                return user;
+                setStatus(idAccount,1);
+                acc.setId(idAccount);
+                return acc;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return acc;
     }
 
-    public void setStatus(int idAccount) {
+    public void setStatus(int idAccount,int status) {
         try {
-            PreparedStatement pre = conn.prepareStatement("update tblUser set status= 1" //table
-                    + " where id_account = ?");
-            pre.setInt(1, idAccount);
+            PreparedStatement pre = conn.prepareStatement("update tblAccount set status= ?" 
+                    + " where id = ?");
+            pre.setInt(1, status);
+            pre.setInt(2, idAccount);
             pre.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public User getUser(Account acc) {
-        User user = new User();
-        try {
-            PreparedStatement pre = conn.prepareStatement("SELECT tblUser.name, tblUser.point FROM tblAccount, tblUser\n"
-                    + "WHERE tblUser.id_account = tblAccount.id and tblAccount.username = ?");
-            pre.setString(1, acc.getUserName());
-            ResultSet rs = pre.executeQuery();
-             if (rs.next()) {
-                 user.setName(rs.getString(1));
-                 user.setPoint(rs.getInt(2));
-                 user.setStatus(0);
-                 user.setAccount(acc);
-                 return user;
-             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
     }
 }
