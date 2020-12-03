@@ -83,12 +83,12 @@ public class HomePageController extends MainController {
     class InviteAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ae) {
-            System.out.println(account.getPassWord());
-            Message message = new Message(account, model.Type.LOGOUT);
+            Account acc = homePageView.getAccountSelected();
+            Message message = new Message(acc, model.Type.LOGOUT);
             if (message instanceof Message) {
                 sendData(message);
                 
-                homePageView.dispose();
+//                homePageView.dispose();
             }
         }
     }

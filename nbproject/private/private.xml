@@ -5,24 +5,16 @@
         <group>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/LoginView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Type.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/client/ChatClient.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/LoginController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Message.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/server/ChatServer.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Account.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/RegisterView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
         </group>
-        <group>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/LoginView.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Type.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/LoginController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Message.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Account.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/RegisterView.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
