@@ -39,7 +39,7 @@ public class LoginDao extends MainDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return acc;
+        return null;
     }
 
     public void setStatus(int idAccount,int status) {

@@ -16,7 +16,6 @@ import view.ServerView;
 public class BTL_GameLapBai {
 
     public static void main(String[] args) {
-//        ServerView view = new ServerView();
         Thread thread = new Thread(new ThreadServer());
         thread.start();
     }    

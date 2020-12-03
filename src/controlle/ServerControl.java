@@ -96,6 +96,10 @@ public class ServerControl implements Runnable {
                             listResult = listOnline.listOnline(acc);
                             mesSend = new Message(listResult, Type.LIST_ONLINE);
                             break;
+                        default:
+                            System.out.println("id..."+acc.getId());
+                            loginDao.setStatus(acc.getId(), 0);
+                            break;
                     }
                     oos.writeObject(mesSend);
                 }
@@ -103,6 +107,7 @@ public class ServerControl implements Runnable {
                 Thread.sleep(100);
             }
         } catch (Exception ex) {
+            System.out.println("skfjasklfja");
             ex.printStackTrace();
             try {
                 ois.close();
