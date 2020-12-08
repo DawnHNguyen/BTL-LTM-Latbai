@@ -5,14 +5,21 @@
  */
 package view.homepage;
 
+import controller.MainController;
+import controller.homepage.HomePageController;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
+import model.Message;
+import static model.Type.INVITE_CHALLENGE;
 
 /**
  *
@@ -22,36 +29,63 @@ public class HomePageView extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ArrayList<Account> listUsers;
+    private MainController mainController;
 
-    public HomePageView(ArrayList<Account> listUsers) {
+    public HomePageView(ArrayList<Account> listUsers, MainController mainController) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.mainController = mainController;
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         System.out.println(listUsers.size());
         for (Account listUser : listUsers) {
-                    System.out.println("12334567890 "+listUser.getName());
+            System.out.println("12334567890 " + listUser.getName());
         }
         setTable(listUsers);
+        Runnable listenChallenge = new Runnable() {
+            @Override
+            public void run() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    Message result = null;
+                    result = mainController.receiveData();
+                    Account account = (Account)result.getContent();
+                    if (result instanceof Message) {
+                        result = (Message) result;
+                        if (result.getType() == INVITE_CHALLENGE) {
+                            int isAccept = JOptionPane.showConfirmDialog(null,account.getName()+ " want to challege you in a game");
+                            if (isAccept == JOptionPane.YES_OPTION) {
+                                Message response = new Message(null, null);
+                                mainController.sendData(response);
+                            }
+                        }
+
+                    }
+                }
+            }
+        };
+        Thread t = new Thread(listenChallenge);
+        t.start();
     }
-    
-    public void addLogoutAcction(ActionListener al){
+
+    public void addLogoutAcction(ActionListener al) {
         jbtLogout.addActionListener(al);
     }
-    public void addInviteAcction(ActionListener al){
+
+    public void addInviteAcction(ActionListener al) {
         jbtInvite.addActionListener(al);
     }
-    public Account getAccountSelected(){
+
+    public Account getAccountSelected() {
         Account acc = new Account();
         int row = tblUser.getSelectedRow();
         acc = listUsers.get(row);
-        System.out.println("heere");
-        System.out.println(row+ " "+ acc.getId()+" "+acc.getName());
         return acc;
     }
-    public void showMessage(String mess){
+
+    public void showMessage(String mess) {
         JOptionPane.showMessageDialog(this, mess);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,7 +186,7 @@ public class HomePageView extends javax.swing.JFrame {
 
     private void jbtInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInviteActionPerformed
 //        Account acc = getAccountSelected();
-        
+
     }//GEN-LAST:event_jbtInviteActionPerformed
 
     public void setTable(List<Account> list) {
@@ -160,7 +194,7 @@ public class HomePageView extends javax.swing.JFrame {
         if (list instanceof ArrayList) {
             int i = 1;
             for (Account user : list) {
-                System.out.println(user.getId()+" "+user.getPoint()+" "+user.getName());
+                System.out.println(user.getId() + " " + user.getPoint() + " " + user.getName());
                 model.addRow(user.toObjects(i++));
             }
         }

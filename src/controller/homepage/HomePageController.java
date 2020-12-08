@@ -36,12 +36,11 @@ private MainController mainController;
         this.mainController = mainController;
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser);
+        this.homePageView = new HomePageView(this.listUser, mainController);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());  
-//        Thread.sleep(1*1000);
-        new ReadThread(mainController.getSocket(), mainController.getInputStream()).run();
+//        new ReadThread(mainController.getSocket(), mainController.getInputStream()).run();
     }
 
     public ArrayList<Account> reciveListUser() {
@@ -51,10 +50,7 @@ private MainController mainController;
             Message result = mainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
-//                for (Account account1 : listUser) {
-//                    System.out.println("123344 "+account1.getName());
-//                }
-//listUser.re
+
             }
             Collections.sort(listUser, new PointComparator());
             return listUser;
@@ -113,15 +109,7 @@ private MainController mainController;
 
         public ReadThread(Socket socket, ObjectInputStream ois) {
             this.socket = socket;
-            try {
-                System.out.println("qwewqe");
-//                this.ois = ois;
-                this.ois = new ObjectInputStream(socket.getInputStream());
-                System.out.println(ois);
-            } catch (IOException ex) {
-                System.out.println("Error getting input stream: " + ex.getMessage());
-                ex.printStackTrace();
-            }
+            this.ois = ois;
         }
 
         @Override
