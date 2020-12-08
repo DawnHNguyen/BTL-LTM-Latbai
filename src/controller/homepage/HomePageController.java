@@ -93,7 +93,8 @@ private MainController mainController;
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
-            Message message = new Message(account, model.Type.CHALLENGE);
+            System.out.println(acc.getName());
+            Message message = new Message(acc, model.Type.CHALLENGE);
             System.out.println("invite");
             if (message instanceof Message) {
                 mainController.sendData(message);

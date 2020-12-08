@@ -9,6 +9,8 @@ import controller.MainController;
 import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
@@ -44,7 +46,11 @@ public class LoginController{
                         JOptionPane.showMessageDialog(loginView, "Login success");
                         Account acc = (Account)result.getContent();
                         System.out.println("ID "+acc.getId());
-                        homePageController = new HomePageController(acc,mainController);
+                        try {
+                            homePageController = new HomePageController(acc,mainController);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         loginView.setVisible(false);
                     }
                 }

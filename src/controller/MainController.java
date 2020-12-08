@@ -21,6 +21,7 @@ public class MainController {
     private String serverHost = "localhost";
 //    private String serverHost = "192.168.43.57";
 //    private String serverHost = "192.168.1.152";
+//    private String serverHost = "172.27.90.65";
 //    private String serverHost = "172.19.201.17";
     private int serverPort = 3000;
     private ObjectOutputStream oos;

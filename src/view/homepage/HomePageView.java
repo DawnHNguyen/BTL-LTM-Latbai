@@ -48,6 +48,7 @@ public class HomePageView extends javax.swing.JFrame {
                 while (!Thread.currentThread().isInterrupted()) {
                     Message result = null;
                     result = mainController.receiveData();
+                    System.out.println(result.getType());
                     Account account = (Account)result.getContent();
                     if (result instanceof Message) {
                         result = (Message) result;
@@ -76,10 +77,18 @@ public class HomePageView extends javax.swing.JFrame {
     }
 
     public Account getAccountSelected() {
-        Account acc = new Account();
+//        Account acc = new Account();
         int row = tblUser.getSelectedRow();
-        acc = listUsers.get(row);
-        return acc;
+        String name = tblUser.getValueAt(row, 1).toString();
+        int point =  (int) tblUser.getValueAt(row, 2);
+        System.out.println("name selected "+ name+ " "+"point"+ point);
+        for(Account acc: listUsers){
+            if(acc.getName().equals(name) && acc.getPoint()== point){
+                return acc;
+            }
+        }
+//        acc = listUsers.get(row);
+        return null;
     }
 
     public void showMessage(String mess) {
