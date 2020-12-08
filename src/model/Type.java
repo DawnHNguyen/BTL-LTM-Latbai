@@ -21,4 +21,6 @@ public enum Type {
     
     LIST_ONLINE,
 
+    CHALLENGE,
+    INVITE_CHALLENGE,
 }

@@ -8,42 +8,53 @@ package controller.homepage;
 import controller.MainController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 import model.Message;
 import model.Type;
-import view.auth.LoginView;
 import view.homepage.HomePageView;
 
 /**
  *
  * @author dolong
  */
-public class HomePageController extends MainController {
+public class HomePageController {
 
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-
-    public HomePageController(Account account) {
+private MainController mainController;
+    public HomePageController(Account account,MainController mainController) throws InterruptedException {
         super();
+        this.mainController = mainController;
         this.account = account;
         this.listUser = reciveListUser();
         this.homePageView = new HomePageView(this.listUser);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
+        this.homePageView.addInviteAcction(new InviteAction());  
+//        Thread.sleep(1*1000);
+        new ReadThread(mainController.getSocket(), mainController.getInputStream()).run();
     }
 
     public ArrayList<Account> reciveListUser() {
         ArrayList<Account> listUser = new ArrayList<Account>();
         try {
-            sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = receiveData();
+            mainController.sendData(new Message(account, Type.LIST_ONLINE));
+            Message result = mainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
+//                for (Account account1 : listUser) {
+//                    System.out.println("123344 "+account1.getName());
+//                }
+//listUser.re
             }
             Collections.sort(listUser, new PointComparator());
             return listUser;
@@ -54,6 +65,7 @@ public class HomePageController extends MainController {
     }
 
     class PointComparator implements Comparator<Account> {
+
         @Override
         public int compare(Account user1, Account user2) {
             int point1 = user1.getPoint();
@@ -69,30 +81,71 @@ public class HomePageController extends MainController {
     }
 
     class LogoutAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent ae) {
-            System.out.println(account.getPassWord());
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
-                sendData(message);
+                mainController.sendData(message);
                 homePageView.dispose();
             }
         }
     }
-    
+
     class InviteAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
-            Message message = new Message(acc, model.Type.LOGOUT);
+            Message message = new Message(account, model.Type.CHALLENGE);
+            System.out.println("invite");
             if (message instanceof Message) {
-                sendData(message);
-                
-//                homePageView.dispose();
+                mainController.sendData(message);
+////                homePageView.dispose();
             }
         }
     }
 
-    public static void main(String[] args) {
+    public class ReadThread implements Runnable {
+
+        private ObjectInputStream ois;
+        private Socket socket;
+
+        public ReadThread(Socket socket, ObjectInputStream ois) {
+            this.socket = socket;
+            try {
+                System.out.println("qwewqe");
+//                this.ois = ois;
+                this.ois = new ObjectInputStream(socket.getInputStream());
+                System.out.println(ois);
+            } catch (IOException ex) {
+                System.out.println("Error getting input stream: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                Message result = null;
+                try {
+                    System.out.println("1");
+                    Object o = ois.readObject();
+                    System.out.println("2");
+                    System.out.println("here");
+                    if (o instanceof Message) {
+                        result = (Message) o;
+                        System.out.println("xinn chaooo");
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Error reading from server: " + ex.getMessage());
+                    ex.printStackTrace();
+                    break;
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ReadThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
+
 }

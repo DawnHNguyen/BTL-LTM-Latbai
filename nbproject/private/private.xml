@@ -3,18 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/ReadThread.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/LoginController.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
+        </group>
+        <group>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/ReadThread.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/LoginView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Type.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/client/ChatClient.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/LoginController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
-            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/server/ChatServer.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Account.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/RegisterView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/btl_gamelapbai/BTL_GameLapBai.java</file>
         </group>
-        <group/>
     </open-files>
 </project-private>

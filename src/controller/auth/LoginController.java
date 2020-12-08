@@ -18,13 +18,12 @@ import view.auth.LoginView;
  *
  * @author dolong
  */
-public class LoginController extends MainController{
+public class LoginController{
     private LoginView loginView;
     private HomePageController homePageController;
-    
-    public LoginController(LoginView loginView) {
-        super();
-        this.loginView = loginView;
+    private MainController mainController = new MainController();
+    public LoginController() {
+        this.loginView = new LoginView(mainController);
         this.loginView.setVisible(true);
         this.loginView.addLoginAction(new LoginAction());
     }
@@ -33,22 +32,19 @@ public class LoginController extends MainController{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            System.out.println("123");
             Account account = loginView.getAccount();
-            System.out.println("username "+account.getUserName());
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                sendData(message);
-                Message result = receiveData();
-                System.out.println(result.getType());
+                mainController.sendData(message);
+                Message result = mainController.receiveData();
                 if (result instanceof Message) {
                     if (result.getType() != model.Type.LOGIN_SUCCESS) {
                         JOptionPane.showMessageDialog(loginView, "User not available");
                     } else {
                         JOptionPane.showMessageDialog(loginView, "Login success");
                         Account acc = (Account)result.getContent();
-                        System.out.println("ID"+acc.getId());
-                        homePageController = new HomePageController(acc);
+                        System.out.println("ID "+acc.getId());
+                        homePageController = new HomePageController(acc,mainController);
                         loginView.setVisible(false);
                     }
                 }

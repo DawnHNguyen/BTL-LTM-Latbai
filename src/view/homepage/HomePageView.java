@@ -23,17 +23,15 @@ public class HomePageView extends javax.swing.JFrame {
     DefaultTableModel model;
     ArrayList<Account> listUsers;
 
-    public HomePageView() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        setTable(listUsers);
-    }
-
     public HomePageView(ArrayList<Account> listUsers) {
         initComponents();
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
+        System.out.println(listUsers.size());
+        for (Account listUser : listUsers) {
+                    System.out.println("12334567890 "+listUser.getName());
+        }
         setTable(listUsers);
     }
     
@@ -47,6 +45,7 @@ public class HomePageView extends javax.swing.JFrame {
         Account acc = new Account();
         int row = tblUser.getSelectedRow();
         acc = listUsers.get(row);
+        System.out.println("heere");
         System.out.println(row+ " "+ acc.getId()+" "+acc.getName());
         return acc;
     }
@@ -161,43 +160,10 @@ public class HomePageView extends javax.swing.JFrame {
         if (list instanceof ArrayList) {
             int i = 1;
             for (Account user : list) {
-                System.out.println(user.getId());
+                System.out.println(user.getId()+" "+user.getPoint()+" "+user.getName());
                 model.addRow(user.toObjects(i++));
             }
         }
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomePageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomePageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomePageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomePageView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomePageView().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
