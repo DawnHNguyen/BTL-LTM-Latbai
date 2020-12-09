@@ -19,8 +19,8 @@ public class BTL_GameLapBai {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        MainController mainController = new MainController();
-        LoginController control = new LoginController();
+        MainController mainController = new MainController();
+        LoginController control = new LoginController(mainController);
     }
     
 }

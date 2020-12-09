@@ -21,10 +21,12 @@ import view.auth.RegisterView;
  *
  * @author dolong
  */
-public class LoginController extends MainController{
+public class LoginController{
     private LoginView loginView;
-    public LoginController() {
+    private MainController mainController;
+    public LoginController(MainController mainController) {
         super();
+        this.mainController = mainController;
         this.loginView = new LoginView();
         this.loginView.setVisible(true);    
         this.loginView.addLoginAction(new LoginAction());
@@ -37,8 +39,8 @@ public class LoginController extends MainController{
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                sendData(message);
-                Message result = receiveData();
+                mainController.sendData(message);
+                Message result = mainController.receiveData();
                 if (result instanceof Message) {
                     if (result.getType() != model.Type.LOGIN_SUCCESS) {
                         JOptionPane.showMessageDialog(loginView, "User not available");
@@ -46,7 +48,7 @@ public class LoginController extends MainController{
                         JOptionPane.showMessageDialog(loginView, "Login success");
                         Account acc = (Account)result.getContent();
                         System.out.println("ID "+acc.getId());
-                        new HomePageController(acc);
+                        new HomePageController(acc,mainController);
                         loginView.setVisible(false);
                     }
                 }
@@ -58,7 +60,7 @@ public class LoginController extends MainController{
     class RegisterAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ae) {
-            new RegisterView();
+            new RegisterController();
         }
     }
 }

@@ -26,27 +26,28 @@ import view.homepage.HomePageView;
  *
  * @author dolong
  */
-public class HomePageController extends MainController{
+public class HomePageController{
 
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-    public HomePageController(Account account ){
+    private MainController mainController;
+    public HomePageController(Account account, MainController mainController){
+        this.mainController = mainController;
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser, this);
+        this.homePageView = new HomePageView(this.listUser, mainController);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());
 //        new ReadThread().run();
     }
 
-    
     public ArrayList<Account> reciveListUser() {
         ArrayList<Account> listUser = new ArrayList<Account>();
         try {
-            sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = receiveData();
+            mainController.sendData(new Message(account, Type.LIST_ONLINE));
+            Message result = mainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
             }
@@ -81,7 +82,7 @@ public class HomePageController extends MainController{
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
-                sendData(message);
+                mainController.sendData(message);
                 homePageView.dispose();
             }
         }
@@ -96,7 +97,7 @@ public class HomePageController extends MainController{
             Message message = new Message(acc, model.Type.CHALLENGE);
             System.out.println("invite");
             if (message instanceof Message) {
-                sendData(message);
+                mainController.sendData(message);
 ////                homePageView.dispose();
             }
         }
@@ -108,7 +109,7 @@ public class HomePageController extends MainController{
             while (true) {
                 Message result = null;
                 System.out.println("1");
-                Object o = receiveData();
+                Object o = mainController.receiveData();
                 System.out.println("2");
                 System.out.println("here");
                 if (o instanceof Message) {
