@@ -18,7 +18,7 @@ public class Account implements Serializable {
     private String passWord;
     private String name;
     private int point;
-    private int status;
+    private String status;
     private int id;
 
     public Account() {
@@ -67,11 +67,11 @@ public class Account implements Serializable {
         this.point = point;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -84,6 +84,6 @@ public class Account implements Serializable {
     }
 
     public Object[] toObjects(int rank) {
-        return new Object[]{rank, name, point};
+        return new Object[]{rank, name, point, status};
     }
 }

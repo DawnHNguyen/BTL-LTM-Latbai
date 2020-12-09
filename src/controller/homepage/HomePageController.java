@@ -31,7 +31,6 @@ public class HomePageController{
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-//    private MainController mainController;
     public HomePageController(Account account){
         this.account = account;
         this.listUser = reciveListUser();
