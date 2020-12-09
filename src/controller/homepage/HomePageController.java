@@ -16,11 +16,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
 import model.Type;
-import static model.Type.INVITE_CHALLENGE;
 import view.auth.LoginView;
 import view.homepage.HomePageView;
 
@@ -28,21 +26,22 @@ import view.homepage.HomePageView;
  *
  * @author dolong
  */
-public class HomePageController extends MainController {
+public class HomePageController extends MainController{
 
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-
-    public HomePageController(Account account) {
+    public HomePageController(Account account ){
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser);
+        this.homePageView = new HomePageView(this.listUser, this);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());
+//        new ReadThread().run();
     }
 
+    
     public ArrayList<Account> reciveListUser() {
         ArrayList<Account> listUser = new ArrayList<Account>();
         try {
@@ -58,9 +57,10 @@ public class HomePageController extends MainController {
         }
         return listUser;
     }
+    
 
     class PointComparator implements Comparator<Account> {
-
+        
         @Override
         public int compare(Account user1, Account user2) {
             int point1 = user1.getPoint();
@@ -74,9 +74,9 @@ public class HomePageController extends MainController {
             }
         }
     }
-
+    
     class LogoutAction implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
@@ -86,9 +86,9 @@ public class HomePageController extends MainController {
             }
         }
     }
-
+    
     class InviteAction implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
@@ -101,24 +101,22 @@ public class HomePageController extends MainController {
             }
         }
     }
-
-//    public void run() {
-//        while (!Thread.currentThread().isInterrupted()) {
-//            Message result = null;
-//            result = receiveData();
-//            System.out.println(result.getType());
-//            Account account = (Account) result.getContent();
-//            if (result instanceof Message) {
-//                result = (Message) result;
-//                if (result.getType() == INVITE_CHALLENGE) {
-//                    int isAccept = JOptionPane.showConfirmDialog(homePageView, account.getName() + " want to challege you in a game");
-//                    if (isAccept == JOptionPane.YES_OPTION) {
-//                        Message response = new Message(null, null);
-//                        sendData(response);
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
+    
+    public class ReadThread implements Runnable {
+        @Override
+        public void run() {
+            while (true) {
+                Message result = null;
+                System.out.println("1");
+                Object o = receiveData();
+                System.out.println("2");
+                System.out.println("here");
+                if (o instanceof Message) {
+                    result = (Message) o;
+                    System.out.println("xinn chaooo");
+                }
+            }
+        }
+    }
+    
 }

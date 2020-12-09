@@ -9,6 +9,7 @@ import controller.MainController;
 import controller.homepage.HomePageController;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -27,13 +28,15 @@ import view.auth.LoginView;
  * @author dolong
  */
 public class HomePageView extends javax.swing.JFrame {
-    
+
     DefaultTableModel model;
     ArrayList<Account> listUsers;
-    
-    public HomePageView(ArrayList<Account> listUsers) {
+    private MainController mainController;
+
+    public HomePageView(ArrayList<Account> listUsers, MainController mainController) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.mainController = mainController;
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         System.out.println(listUsers.size());
@@ -41,33 +44,33 @@ public class HomePageView extends javax.swing.JFrame {
             System.out.println("12334567890 " + listUser.getName());
         }
         setTable(listUsers);
-//        Runnable listenChallenge = new Runnable() {
-//            @Override
-//            public void run() {
-//                while (!Thread.currentThread().isInterrupted()) {
-//                    Message result = null;
-//                    result = mainController.receiveData();
-//                    System.out.println(result.getType());
-//                    Account account = (Account) result.getContent();
-//                    if (result instanceof Message) {
-//                        result = (Message) result;
-//                        if (result.getType() == INVITE_CHALLENGE) {
-//                            int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
-//                            if (isAccept == JOptionPane.YES_OPTION) {
-//                                Message response = new Message(null, null);
-//                                mainController.sendData(response);
-//                            }
-//                        }
-//                        
-//                    }
-//                }
-//            }
-//        };
-//        Thread t = new Thread(listenChallenge);
-//        t.start();
+        Runnable listenChallenge = new Runnable() {
+
+            @Override
+            public void run() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    Message result = null;
+                    result = mainController.receiveData();
+                    System.out.println(result.getType());
+                    Account account = (Account) result.getContent();
+                    if (result instanceof Message) {
+                        result = (Message) result;
+                        if (result.getType() == INVITE_CHALLENGE) {
+                            int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
+                            if (isAccept == JOptionPane.YES_OPTION) {
+                                Message response = new Message(null, null);
+                                mainController.sendData(response);
+                            }
+                        }
+
+                    }
+                }
+            }
+        };
+        Thread t = new Thread(listenChallenge);
+        t.start();
     }
 
-    
     public void addLogoutAcction(ActionListener al) {
         jbtLogout.addActionListener(al);
     }
@@ -79,7 +82,7 @@ public class HomePageView extends javax.swing.JFrame {
     public void addInviteAcction(ActionListener al) {
         jbtInvite.addActionListener(al);
     }
-    
+
     public Account getAccountSelected() {
         int row = tblUser.getSelectedRow();
         String name = tblUser.getValueAt(row, 1).toString();
@@ -92,7 +95,7 @@ public class HomePageView extends javax.swing.JFrame {
         }
         return null;
     }
-    
+
     public void showMessage(String mess) {
         JOptionPane.showMessageDialog(this, mess);
     }
@@ -199,7 +202,7 @@ public class HomePageView extends javax.swing.JFrame {
 //        Account acc = getAccountSelected();
 
     }//GEN-LAST:event_jbtInviteActionPerformed
-    
+
     public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {
