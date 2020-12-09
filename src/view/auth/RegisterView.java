@@ -16,10 +16,8 @@ import model.Account;
  */
 public class RegisterView extends javax.swing.JFrame {
 
-    private MainController mainController;
-    public RegisterView(MainController mainController) {
+    public RegisterView( ) {
         initComponents();
-        this.mainController = mainController;
         this.setLocationRelativeTo(null);
     }
   public Account getAccount() {
@@ -38,12 +36,12 @@ public class RegisterView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jtfUsername = new javax.swing.JTextField();
         jtfPassword = new javax.swing.JPasswordField();
-        jbtRegister = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jtfPassword1 = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jtfName = new javax.swing.JTextField();
-        jbtBack = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,10 +52,10 @@ public class RegisterView extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
 
-        jbtRegister.setText("Register");
-        jbtRegister.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRegisterActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -65,10 +63,10 @@ public class RegisterView extends javax.swing.JFrame {
 
         jLabel5.setText("Display name");
 
-        jbtBack.setText("Back");
-        jbtBack.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtBackActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -95,9 +93,9 @@ public class RegisterView extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbtBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbtRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(92, 92, 92)
@@ -132,24 +130,23 @@ public class RegisterView extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtRegister)
-                    .addComponent(jbtBack))
+                    .addComponent(btnRegister)
+                    .addComponent(btnBack))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRegisterActionPerformed
-    }//GEN-LAST:event_jbtRegisterActionPerformed
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
-    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
-        new LoginView(mainController).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jbtBackActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+
+    }//GEN-LAST:event_btnBackActionPerformed
 
     public void addRegisterAction(ActionListener al){
-        jbtRegister.addActionListener(al);
+        btnRegister.addActionListener(al);
     }
     public boolean checkPassword(){
         String pass0 = new String(jtfPassword.getPassword());
@@ -162,13 +159,13 @@ public class RegisterView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JButton jbtBack;
-    private javax.swing.JButton jbtRegister;
     private javax.swing.JTextField jtfName;
     private javax.swing.JPasswordField jtfPassword;
     private javax.swing.JPasswordField jtfPassword1;

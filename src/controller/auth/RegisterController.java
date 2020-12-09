@@ -13,14 +13,12 @@ import model.Account;
 import model.Message;
 import view.auth.RegisterView;
 
-public class RegisterController {
+public class RegisterController extends MainController{
 
     private RegisterView registerView;
-    private MainController mainController;
 
-    public RegisterController(MainController mainController) {
-        this.mainController = mainController;
-        this.registerView = new RegisterView(mainController);
+    public RegisterController() {
+        this.registerView = new RegisterView();
         this.registerView.addRegisterAction(new RegisterAction());
     }
 
@@ -34,8 +32,8 @@ public class RegisterController {
                 Account account = registerView.getAccount();
                 Message message = new Message(account, model.Type.REGISTER);
                 if (message instanceof Message) {
-                    mainController.sendData(message);
-                    Message result = mainController.receiveData();
+                    sendData(message);
+                    Message result = receiveData();
                     if (result instanceof Message) {
                         if (result.getType() == model.Type.REGISTER_SUCCESS) {
                             JOptionPane.showMessageDialog(registerView, "Register success");

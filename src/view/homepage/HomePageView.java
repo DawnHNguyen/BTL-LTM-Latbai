@@ -20,21 +20,20 @@ import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.Message;
 import static model.Type.INVITE_CHALLENGE;
+import view.auth.LoginView;
 
 /**
  *
  * @author dolong
  */
 public class HomePageView extends javax.swing.JFrame {
-
+    
     DefaultTableModel model;
     ArrayList<Account> listUsers;
-    private MainController mainController;
-
-    public HomePageView(ArrayList<Account> listUsers, MainController mainController) {
+    
+    public HomePageView(ArrayList<Account> listUsers) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.mainController = mainController;
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         System.out.println(listUsers.size());
@@ -42,55 +41,58 @@ public class HomePageView extends javax.swing.JFrame {
             System.out.println("12334567890 " + listUser.getName());
         }
         setTable(listUsers);
-        Runnable listenChallenge = new Runnable() {
-            @Override
-            public void run() {
-                while (!Thread.currentThread().isInterrupted()) {
-                    Message result = null;
-                    result = mainController.receiveData();
-                    System.out.println(result.getType());
-                    Account account = (Account)result.getContent();
-                    if (result instanceof Message) {
-                        result = (Message) result;
-                        if (result.getType() == INVITE_CHALLENGE) {
-                            int isAccept = JOptionPane.showConfirmDialog(null,account.getName()+ " want to challege you in a game");
-                            if (isAccept == JOptionPane.YES_OPTION) {
-                                Message response = new Message(null, null);
-                                mainController.sendData(response);
-                            }
-                        }
-
-                    }
-                }
-            }
-        };
-        Thread t = new Thread(listenChallenge);
-        t.start();
+//        Runnable listenChallenge = new Runnable() {
+//            @Override
+//            public void run() {
+//                while (!Thread.currentThread().isInterrupted()) {
+//                    Message result = null;
+//                    result = mainController.receiveData();
+//                    System.out.println(result.getType());
+//                    Account account = (Account) result.getContent();
+//                    if (result instanceof Message) {
+//                        result = (Message) result;
+//                        if (result.getType() == INVITE_CHALLENGE) {
+//                            int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
+//                            if (isAccept == JOptionPane.YES_OPTION) {
+//                                Message response = new Message(null, null);
+//                                mainController.sendData(response);
+//                            }
+//                        }
+//                        
+//                    }
+//                }
+//            }
+//        };
+//        Thread t = new Thread(listenChallenge);
+//        t.start();
     }
 
+    
     public void addLogoutAcction(ActionListener al) {
         jbtLogout.addActionListener(al);
+    }
+
+    public void hiddenLoginView(LoginView loginView) {
+        loginView.setVisible(false);
     }
 
     public void addInviteAcction(ActionListener al) {
         jbtInvite.addActionListener(al);
     }
-
+    
     public Account getAccountSelected() {
-//        Account acc = new Account();
         int row = tblUser.getSelectedRow();
         String name = tblUser.getValueAt(row, 1).toString();
-        int point =  (int) tblUser.getValueAt(row, 2);
-        System.out.println("name selected "+ name+ " "+"point"+ point);
-        for(Account acc: listUsers){
-            if(acc.getName().equals(name) && acc.getPoint()== point){
+        int point = (int) tblUser.getValueAt(row, 2);
+        System.out.println("name selected " + name + " " + "point" + point);
+        for (Account acc : listUsers) {
+            if (acc.getName().equals(name) && acc.getPoint() == point) {
                 return acc;
             }
         }
-//        acc = listUsers.get(row);
         return null;
     }
-
+    
     public void showMessage(String mess) {
         JOptionPane.showMessageDialog(this, mess);
     }
@@ -197,7 +199,7 @@ public class HomePageView extends javax.swing.JFrame {
 //        Account acc = getAccountSelected();
 
     }//GEN-LAST:event_jbtInviteActionPerformed
-
+    
     public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {

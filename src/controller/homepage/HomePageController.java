@@ -16,41 +16,40 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
 import model.Type;
+import static model.Type.INVITE_CHALLENGE;
+import view.auth.LoginView;
 import view.homepage.HomePageView;
 
 /**
  *
  * @author dolong
  */
-public class HomePageController {
+public class HomePageController extends MainController {
 
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-private MainController mainController;
-    public HomePageController(Account account,MainController mainController) throws InterruptedException {
-        super();
-        this.mainController = mainController;
+
+    public HomePageController(Account account) {
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser, mainController);
+        this.homePageView = new HomePageView(this.listUser);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
-        this.homePageView.addInviteAcction(new InviteAction());  
-//        new ReadThread(mainController.getSocket(), mainController.getInputStream()).run();
+        this.homePageView.addInviteAcction(new InviteAction());
     }
 
     public ArrayList<Account> reciveListUser() {
         ArrayList<Account> listUser = new ArrayList<Account>();
         try {
-            mainController.sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = mainController.receiveData();
+            sendData(new Message(account, Type.LIST_ONLINE));
+            Message result = receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
-
             }
             Collections.sort(listUser, new PointComparator());
             return listUser;
@@ -82,7 +81,7 @@ private MainController mainController;
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
-                mainController.sendData(message);
+                sendData(message);
                 homePageView.dispose();
             }
         }
@@ -97,44 +96,29 @@ private MainController mainController;
             Message message = new Message(acc, model.Type.CHALLENGE);
             System.out.println("invite");
             if (message instanceof Message) {
-                mainController.sendData(message);
+                sendData(message);
 ////                homePageView.dispose();
             }
         }
     }
 
-    public class ReadThread implements Runnable {
-
-        private ObjectInputStream ois;
-        private Socket socket;
-
-        public ReadThread(Socket socket, ObjectInputStream ois) {
-            this.socket = socket;
-            this.ois = ois;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                Message result = null;
-                try {
-                    System.out.println("1");
-                    Object o = ois.readObject();
-                    System.out.println("2");
-                    System.out.println("here");
-                    if (o instanceof Message) {
-                        result = (Message) o;
-                        System.out.println("xinn chaooo");
-                    }
-                } catch (IOException ex) {
-                    System.out.println("Error reading from server: " + ex.getMessage());
-                    ex.printStackTrace();
-                    break;
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ReadThread.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
+//    public void run() {
+//        while (!Thread.currentThread().isInterrupted()) {
+//            Message result = null;
+//            result = receiveData();
+//            System.out.println(result.getType());
+//            Account account = (Account) result.getContent();
+//            if (result instanceof Message) {
+//                result = (Message) result;
+//                if (result.getType() == INVITE_CHALLENGE) {
+//                    int isAccept = JOptionPane.showConfirmDialog(homePageView, account.getName() + " want to challege you in a game");
+//                    if (isAccept == JOptionPane.YES_OPTION) {
+//                        Message response = new Message(null, null);
+//                        sendData(response);
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
 }

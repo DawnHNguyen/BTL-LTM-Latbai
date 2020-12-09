@@ -17,10 +17,10 @@ import model.Account;
  */
 public class LoginView extends javax.swing.JFrame {
 
-    private MainController mainController;
-    public LoginView(MainController mainController) {
+//    private MainController mainController;
+    public LoginView( ) {
         initComponents();
-        this.mainController = mainController;
+//        this.mainController = mainController;
         this.setLocationRelativeTo(null);
     }
 
@@ -30,10 +30,13 @@ public class LoginView extends javax.swing.JFrame {
         Account account = new Account(username, password);
         return account;
     }
+    
     public void addLoginAction(ActionListener al){
         btnLogin.addActionListener(al);
     }
-
+    public void addRegisterAction(ActionListener al){
+        btnRegister.addActionListener(al);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,7 +47,7 @@ public class LoginView extends javax.swing.JFrame {
         jtfUsername = new javax.swing.JTextField();
         jtfPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        jbtRegister = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,10 +60,10 @@ public class LoginView extends javax.swing.JFrame {
 
         btnLogin.setText("Login");
 
-        jbtRegister.setText("Register");
-        jbtRegister.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRegisterActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -85,7 +88,7 @@ public class LoginView extends javax.swing.JFrame {
                         .addGap(67, 67, 67)
                         .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53)
-                        .addComponent(jbtRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,16 +107,16 @@ public class LoginView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
-                    .addComponent(jbtRegister))
+                    .addComponent(btnRegister))
                 .addGap(36, 36, 36))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRegisterActionPerformed
-        RegisterController registerController = new RegisterController(mainController);
-    }//GEN-LAST:event_jbtRegisterActionPerformed
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+//        RegisterController registerController = new RegisterController(mainController);
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,10 +124,10 @@ public class LoginView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JButton jbtRegister;
     private javax.swing.JPasswordField jtfPassword;
     private javax.swing.JTextField jtfUsername;
     // End of variables declaration//GEN-END:variables

@@ -5,11 +5,16 @@
  */
 package controller;
 
+import java.awt.Component;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import model.Account;
 import model.Message;
+import static model.Type.INVITE_CHALLENGE;
 
 /**
  *
@@ -32,6 +37,7 @@ public class MainController {
             mySocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(mySocket.getOutputStream());
             ois = new ObjectInputStream(mySocket.getInputStream());
+            run();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -72,5 +78,25 @@ public class MainController {
             return false;
         }
         return true;
+    }
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            Message result = null;
+            result = receiveData();
+            System.out.println(result.getType());
+            Account account = (Account) result.getContent();
+            if (result instanceof Message) {
+                result = (Message) result;
+//                if (result.getType() == INVITE_CHALLENGE) {
+//                    Component JFrame;
+//                    int isAccept = JOptionPane.showConfirmDialog(JFrame, account.getName() + " want to challege you in a game");
+//                    if (isAccept == JOptionPane.YES_OPTION) {
+//                        Message response = new Message(null, null);
+//                        sendData(response);
+//                    }
+//                }
+
+            }
+        }
     }
 }

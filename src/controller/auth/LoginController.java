@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
 import view.auth.LoginView;
+import view.auth.RegisterView;
 
 /**
  *
@@ -22,24 +23,22 @@ import view.auth.LoginView;
  */
 public class LoginController extends MainController{
     private LoginView loginView;
-    private HomePageController homePageController;
-    private MainController mainController;
-    public LoginController(MainController mainController) {
-        this.mainController = mainController;
-        this.loginView = new LoginView(mainController);
-        this.loginView.setVisible(true);
+    public LoginController() {
+        super();
+        this.loginView = new LoginView();
+        this.loginView.setVisible(true);    
         this.loginView.addLoginAction(new LoginAction());
+        this.loginView.addRegisterAction(new RegisterAction());
     }
 
     class LoginAction implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                mainController.sendData(message);
-                Message result = mainController.receiveData();
+                sendData(message);
+                Message result = receiveData();
                 if (result instanceof Message) {
                     if (result.getType() != model.Type.LOGIN_SUCCESS) {
                         JOptionPane.showMessageDialog(loginView, "User not available");
@@ -47,17 +46,19 @@ public class LoginController extends MainController{
                         JOptionPane.showMessageDialog(loginView, "Login success");
                         Account acc = (Account)result.getContent();
                         System.out.println("ID "+acc.getId());
-                        try {
-                            homePageController = new HomePageController(acc,mainController);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        new HomePageController(acc);
                         loginView.setVisible(false);
                     }
                 }
             } else {
                 JOptionPane.showMessageDialog(loginView, "Check your login!!");
             }
+        }
+    }
+    class RegisterAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            new RegisterView();
         }
     }
 }
