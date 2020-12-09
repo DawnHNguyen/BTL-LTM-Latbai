@@ -7,6 +7,7 @@ package view.homepage;
 
 import controller.MainController;
 import controller.homepage.HomePageController;
+import controller.rank.RankController;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
@@ -20,8 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.Message;
+import static model.Type.ACCEPT_CHALLENGE;
 import static model.Type.INVITE_CHALLENGE;
+import static model.Type.REJECT_CHALLENGE;
 import view.auth.LoginView;
+import view.rank.RankView;
 
 /**
  *
@@ -31,18 +35,15 @@ public class HomePageView extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ArrayList<Account> listUsers;
-//    private MainController mainController;
+    private Account account;
 
-    public HomePageView(ArrayList<Account> listUsers) {
+    public HomePageView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
-        System.out.println(listUsers.size());
-        for (Account listUser : listUsers) {
-            System.out.println("12334567890 " + listUser.getStatus());
-        }
         setTable(listUsers);
+        jlbAccount.setText("Xin chao "+account.getName());
         Runnable listenChallenge = new Runnable() {
 
             @Override
@@ -50,18 +51,27 @@ public class HomePageView extends javax.swing.JFrame {
                 while (!Thread.currentThread().isInterrupted()) {
                     Message result = null;
                     result = MainController.receiveData();
-                    System.out.println(result.getType());
                     Account account = (Account) result.getContent();
                     if (result instanceof Message) {
                         result = (Message) result;
                         if (result.getType() == INVITE_CHALLENGE) {
                             int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
                             if (isAccept == JOptionPane.YES_OPTION) {
-                                Message response = new Message(null, null);
+                                Message response = new Message(account, ACCEPT_CHALLENGE);
+                                System.out.println("accept");
+                                MainController.sendData(response);
+                            } else {
+                                Message response = new Message(account, REJECT_CHALLENGE);
                                 MainController.sendData(response);
                             }
                         }
-
+                        if (result.getType() == ACCEPT_CHALLENGE) {
+                            System.out.println("doi ti...");
+                        }
+                        if (result.getType() == REJECT_CHALLENGE) {
+                            System.out.println("REJECT_CHALLENGE...");
+                            JOptionPane.showMessageDialog(null, account.getName() + " dont want to challege you in a game");
+                        }
                     }
                 }
             }
@@ -74,12 +84,12 @@ public class HomePageView extends javax.swing.JFrame {
         jbtLogout.addActionListener(al);
     }
 
-    public void hiddenLoginView(LoginView loginView) {
-        loginView.setVisible(false);
-    }
-
     public void addInviteAcction(ActionListener al) {
         jbtInvite.addActionListener(al);
+    }
+
+    public void addRankingAcction(ActionListener al) {
+        jbtRanking.addActionListener(al);
     }
 
     public Account getAccountSelected() {
@@ -108,6 +118,8 @@ public class HomePageView extends javax.swing.JFrame {
         tblUser = new javax.swing.JTable();
         jbtInvite = new javax.swing.JButton();
         jbtLogout = new javax.swing.JButton();
+        jbtRanking = new javax.swing.JButton();
+        jlbAccount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,40 +160,54 @@ public class HomePageView extends javax.swing.JFrame {
             }
         });
 
+        jbtRanking.setText("Ranking");
+        jbtRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRankingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(209, 209, 209)
+                .addGap(59, 59, 59)
                 .addComponent(jbtInvite, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtLogout))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jbtLogout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlbAccount)
+                        .addGap(70, 70, 70))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbtLogout)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtInvite)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtLogout)
+                    .addComponent(jlbAccount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtInvite)
+                    .addComponent(jbtRanking))
                 .addContainerGap())
         );
 
@@ -197,13 +223,16 @@ public class HomePageView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbtInviteActionPerformed
 
+    private void jbtRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRankingActionPerformed
+
+    }//GEN-LAST:event_jbtRankingActionPerformed
+
     public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {
-            int i = 1;
+            int rank = 1;
             for (Account user : list) {
-                System.out.println(user.getId() + " " + user.getPoint() + " " + user.getName());
-                model.addRow(user.toObjects(i++));
+                model.addRow(user.toObjects(rank++));
             }
         }
     }
@@ -213,6 +242,8 @@ public class HomePageView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtInvite;
     private javax.swing.JButton jbtLogout;
+    private javax.swing.JButton jbtRanking;
+    private javax.swing.JLabel jlbAccount;
     private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 

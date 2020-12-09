@@ -6,16 +6,12 @@
 package controller.homepage;
 
 import controller.MainController;
+import controller.rank.RankController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Account;
 import model.Message;
 import model.Type;
@@ -34,14 +30,15 @@ public class HomePageController{
     public HomePageController(Account account){
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser);
+        this.homePageView = new HomePageView(this.listUser, account);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());
+        this.homePageView.addRankingAcction(new RankingAction());
     }
 
     public ArrayList<Account> reciveListUser() {
-        ArrayList<Account> listUser = new ArrayList<Account>();
+        ArrayList<Account> listUser = new ArrayList<>();
         try {
             MainController.sendData(new Message(account, Type.LIST_ONLINE));
             Message result = MainController.receiveData();
@@ -80,7 +77,7 @@ public class HomePageController{
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
                 MainController.sendData(message);
-                homePageView.dispose();
+                new LoginView().setVisible(true);
             }
         }
     }
@@ -90,13 +87,18 @@ public class HomePageController{
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
-            System.out.println(acc.getName());
             Message message = new Message(acc, model.Type.CHALLENGE);
-            System.out.println("invite");
             if (message instanceof Message) {
                 MainController.sendData(message);
 ////                homePageView.dispose();
             }
+        }
+    }
+    class RankingAction implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            new RankController(account);
         }
     }
      

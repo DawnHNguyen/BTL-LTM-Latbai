@@ -23,10 +23,8 @@ import view.auth.RegisterView;
  */
 public class LoginController{
     private LoginView loginView;
-//    private MainController mainController;
     public LoginController() {
         super();
-//        this.mainController = mainController;
         this.loginView = new LoginView();
         this.loginView.setVisible(true);    
         this.loginView.addLoginAction(new LoginAction());
