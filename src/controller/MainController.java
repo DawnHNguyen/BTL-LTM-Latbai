@@ -22,15 +22,15 @@ import static model.Type.INVITE_CHALLENGE;
  */
 public class MainController {
 
-    private Socket mySocket;
-    private String serverHost = "localhost";
+    private static Socket mySocket;
+    private static String serverHost = "localhost";
 //    private String serverHost = "192.168.43.57";
 //    private String serverHost = "192.168.1.152";
 //    private String serverHost = "172.27.90.65";
 //    private String serverHost = "172.19.201.17";
-    private int serverPort = 3000;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private static int serverPort = 3000;
+    private static ObjectOutputStream oos;
+    private static ObjectInputStream ois;
 
     public MainController() {
         try {
@@ -41,13 +41,7 @@ public class MainController {
             ex.printStackTrace();
         }
     }
-    public Socket getSocket(){
-        return mySocket;
-    }
-    public ObjectInputStream getInputStream(){
-        return ois;
-    }
-    public boolean sendData(Message message) {
+    public static boolean sendData(Message message) {
         try {
             oos.writeObject(message);
         } catch (IOException ex) {
@@ -56,7 +50,7 @@ public class MainController {
         return true;
     }
 
-    public Message receiveData() {
+    public static Message receiveData() {
         Message result = null;
         try {
             Object o = ois.readObject();
@@ -69,7 +63,7 @@ public class MainController {
         return result;
     }
 
-    public boolean closeConnection() {
+    public static boolean closeConnection() {
         try {
             mySocket.close();
         } catch (Exception ex) {

@@ -23,10 +23,10 @@ import view.auth.RegisterView;
  */
 public class LoginController{
     private LoginView loginView;
-    private MainController mainController;
-    public LoginController(MainController mainController) {
+//    private MainController mainController;
+    public LoginController() {
         super();
-        this.mainController = mainController;
+//        this.mainController = mainController;
         this.loginView = new LoginView();
         this.loginView.setVisible(true);    
         this.loginView.addLoginAction(new LoginAction());
@@ -39,8 +39,8 @@ public class LoginController{
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                mainController.sendData(message);
-                Message result = mainController.receiveData();
+                MainController.sendData(message);
+                Message result = MainController.receiveData();
                 if (result instanceof Message) {
                     if (result.getType() != model.Type.LOGIN_SUCCESS) {
                         JOptionPane.showMessageDialog(loginView, "User not available");
@@ -48,7 +48,7 @@ public class LoginController{
                         JOptionPane.showMessageDialog(loginView, "Login success");
                         Account acc = (Account)result.getContent();
                         System.out.println("ID "+acc.getId());
-                        new HomePageController(acc,mainController);
+                        new HomePageController(acc);
                         loginView.setVisible(false);
                     }
                 }

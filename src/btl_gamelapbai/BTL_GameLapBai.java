@@ -20,7 +20,7 @@ public class BTL_GameLapBai {
      */
     public static void main(String[] args) {
         MainController mainController = new MainController();
-        LoginController control = new LoginController(mainController);
+        LoginController control = new LoginController();
     }
     
 }

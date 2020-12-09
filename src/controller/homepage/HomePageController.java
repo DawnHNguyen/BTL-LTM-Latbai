@@ -31,23 +31,21 @@ public class HomePageController{
     HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-    private MainController mainController;
-    public HomePageController(Account account, MainController mainController){
-        this.mainController = mainController;
+//    private MainController mainController;
+    public HomePageController(Account account){
         this.account = account;
         this.listUser = reciveListUser();
-        this.homePageView = new HomePageView(this.listUser, mainController);
+        this.homePageView = new HomePageView(this.listUser);
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());
-//        new ReadThread().run();
     }
 
     public ArrayList<Account> reciveListUser() {
         ArrayList<Account> listUser = new ArrayList<Account>();
         try {
-            mainController.sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = mainController.receiveData();
+            MainController.sendData(new Message(account, Type.LIST_ONLINE));
+            Message result = MainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
             }
@@ -82,7 +80,7 @@ public class HomePageController{
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
-                mainController.sendData(message);
+                MainController.sendData(message);
                 homePageView.dispose();
             }
         }
@@ -97,27 +95,10 @@ public class HomePageController{
             Message message = new Message(acc, model.Type.CHALLENGE);
             System.out.println("invite");
             if (message instanceof Message) {
-                mainController.sendData(message);
+                MainController.sendData(message);
 ////                homePageView.dispose();
             }
         }
     }
-    
-    public class ReadThread implements Runnable {
-        @Override
-        public void run() {
-            while (true) {
-                Message result = null;
-                System.out.println("1");
-                Object o = mainController.receiveData();
-                System.out.println("2");
-                System.out.println("here");
-                if (o instanceof Message) {
-                    result = (Message) o;
-                    System.out.println("xinn chaooo");
-                }
-            }
-        }
-    }
-    
+     
 }

@@ -31,14 +31,11 @@ public class HomePageView extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ArrayList<Account> listUsers;
-    private MainController mainController;
+//    private MainController mainController;
 
-    public HomePageView(ArrayList<Account> listUsers, MainController mainController) {
+    public HomePageView(ArrayList<Account> listUsers) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.mainController = mainController;
-        System.out.println(mainController);
-        System.out.println(this.mainController);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         System.out.println(listUsers.size());
@@ -52,7 +49,7 @@ public class HomePageView extends javax.swing.JFrame {
             public void run() {
                 while (!Thread.currentThread().isInterrupted()) {
                     Message result = null;
-                    result = mainController.receiveData();
+                    result = MainController.receiveData();
                     System.out.println(result.getType());
                     Account account = (Account) result.getContent();
                     if (result instanceof Message) {
@@ -61,7 +58,7 @@ public class HomePageView extends javax.swing.JFrame {
                             int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
                             if (isAccept == JOptionPane.YES_OPTION) {
                                 Message response = new Message(null, null);
-                                mainController.sendData(response);
+                                MainController.sendData(response);
                             }
                         }
 
