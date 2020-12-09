@@ -20,11 +20,12 @@ import view.auth.LoginView;
  *
  * @author dolong
  */
-public class LoginController{
+public class LoginController extends MainController{
     private LoginView loginView;
     private HomePageController homePageController;
-    private MainController mainController = new MainController();
-    public LoginController() {
+    private MainController mainController;
+    public LoginController(MainController mainController) {
+        this.mainController = mainController;
         this.loginView = new LoginView(mainController);
         this.loginView.setVisible(true);
         this.loginView.addLoginAction(new LoginAction());
