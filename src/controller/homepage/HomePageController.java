@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 import model.Message;
 import model.Type;
@@ -57,6 +59,7 @@ public class HomePageController {
 
     public static void setViewVisible() {
         homePageView.setVisible(true);
+        homePageView.startThread();
     }
 
     class PointComparator implements Comparator<Account> {
@@ -107,6 +110,8 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             homePageView.setVisible(false);
+            homePageView.stopThread();
+            System.out.println("ok");
             new RankController(account);
         }
     }

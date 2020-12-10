@@ -37,9 +37,6 @@ public class RankController {
             Message result = MainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
-                for(Account account: listUser){
-                    System.out.println(account.getName());
-                }
             }
             Collections.sort(listUser, new RankController.PointComparator());
             return listUser;

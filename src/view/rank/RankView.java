@@ -27,9 +27,9 @@ public class RankView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
-       
         jlbName.setText("Xin chao "+account.getName());
         setTable(listUsers);
+        System.out.println("here");
     }
 
     @SuppressWarnings("unchecked")

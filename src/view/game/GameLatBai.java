@@ -32,8 +32,8 @@ public final class GameLatBai extends JFrame implements ActionListener {
     int level = 0;
     int hit = 0;
     int h;
-    int[] sizeX = new int[]{2, 2, 2, 3, 4, 4, 4, 4, 5, 5};
-    int[] sizeY = new int[]{3, 4, 6, 6, 6, 7, 8, 10, 10, 12};
+//    int[] sizeX = new int[]{2, 2, 2, 3, 4, 4, 4, 4, 5, 5};
+//    int[] sizeY = new int[]{3, 4, 6, 6, 6, 7, 8, 10, 10, 12};
     int[] TIME = new int[]{10, 20, 30, 50, 65, 80, 100, 120, 140, 150};
     int maxTime = 30;
     int time = 0;
@@ -41,8 +41,8 @@ public final class GameLatBai extends JFrame implements ActionListener {
     int BOM;
     int dem = 0;
     int maxXY = 100;
-    int m = 2;
-    int n = 3;
+    int m = 5;
+    int n = 5;
     private JProgressBar progressTime;
     private JButton[][] bt;
     private boolean[][] tick;
@@ -109,8 +109,8 @@ public final class GameLatBai extends JFrame implements ActionListener {
     }
 
     public Container init(int k, int score) {
-        this.m = this.sizeX[k];
-        this.n = this.sizeY[k];
+//        this.m = this.sizeX[k];
+//        this.n = this.sizeY[k];
         this.maxTime = this.TIME[k] * 10;
         this.time = 0;
         Container cn = this.getContentPane();
@@ -214,7 +214,6 @@ public final class GameLatBai extends JFrame implements ActionListener {
     private Icon getIcon(int index) {
         int width = 120;
         int height = 170;
-//        Image image = (new ImageIcon(this.getClass().getResource("/icon/icon" + index + ".jpg"))).getImage();
         Image image = (new ImageIcon(this.getClass().getResource("/images/icon" + index + ".jpg"))).getImage();
         Icon icon = new ImageIcon(image.getScaledInstance(width, height, 4));
         return icon;

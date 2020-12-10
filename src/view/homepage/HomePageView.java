@@ -26,6 +26,7 @@ import static model.Type.INVITE_CHALLENGE;
 import static model.Type.PLAYING;
 import static model.Type.REJECT_CHALLENGE;
 import view.auth.LoginView;
+import view.game.GameLatBai;
 import view.rank.RankView;
 
 /**
@@ -37,52 +38,64 @@ public class HomePageView extends javax.swing.JFrame {
     DefaultTableModel model;
     ArrayList<Account> listUsers;
     private Account account;
-//    Runnable listenChallenge;
-//    Thread t = new Thread(listenChallenge);
+    Runnable listenChallenge;
+    static Thread thread;
+    static boolean isRunning;
+
     public HomePageView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         setTable(listUsers);
-        jlbAccount.setText("Xin chao "+account.getName());
-        Runnable listenChallenge = new Runnable() {
+        jlbAccount.setText("Xin chao " + account.getName());
+        isRunning = true;
+        listenChallenge = new Runnable() {
             @Override
             public void run() {
-                while (!Thread.currentThread().isInterrupted()) {
+                while (isRunning) {
+                    System.out.println("runnning");
                     Message result = null;
                     result = MainController.receiveData();
-                    Account account = (Account) result.getContent();
                     if (result instanceof Message) {
+                        Account accountRecived = (Account) result.getContent();
                         result = (Message) result;
-                        System.out.println("helll");
                         if (result.getType() == INVITE_CHALLENGE) {
-                            System.out.println("co nguoi moi");
-                            int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
+                            int isAccept = JOptionPane.showConfirmDialog(null, accountRecived.getName() + " want to challege you in a game");
                             if (isAccept == JOptionPane.YES_OPTION) {
-                                Message response = new Message(account, ACCEPT_CHALLENGE);
+                                Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
                                 System.out.println("accept");
                                 MainController.sendData(response);
                             } else {
-                                Message response = new Message(account, REJECT_CHALLENGE);
+                                Message response = new Message(accountRecived, REJECT_CHALLENGE);
                                 MainController.sendData(response);
                             }
                         }
                         if (result.getType() == ACCEPT_CHALLENGE) {
-                            System.out.println("doi ti...");
+                           new GameLatBai(0, 0);
                         }
                         if (result.getType() == REJECT_CHALLENGE) {
-                            JOptionPane.showMessageDialog(null, account.getName() + " dont want to challege you in a game");
+                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
                         }
                         if (result.getType() == PLAYING) {
-                            JOptionPane.showMessageDialog(null, account.getName() + " playing a game with someone else!");
+                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " playing a game with someone else!");
                         }
                     }
                 }
             }
         };
-        Thread t = new Thread(listenChallenge);
-        t.start();
+        thread = new Thread(listenChallenge);
+        thread.start();
+    }
+    
+    public void stopThread() {
+        isRunning = false;
+    }
+
+    public void startThread() {
+        isRunning = true;
+//        thread = new Thread(listenChallenge);
+        thread.start();
     }
 
     public void addLogoutAcction(ActionListener al) {
@@ -104,6 +117,7 @@ public class HomePageView extends javax.swing.JFrame {
         System.out.println("name selected " + name + " " + "point" + point);
         for (Account acc : listUsers) {
             if (acc.getName().equals(name) && acc.getPoint() == point) {
+                System.out.println(acc.getId());
                 return acc;
             }
         }
