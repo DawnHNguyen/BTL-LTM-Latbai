@@ -25,7 +25,7 @@ public class RankController {
     public RankController(Account account) {
         this.account = account;
         this.listUser = reciveListUser();
-        this.rankView= new RankView(this.listUser);
+        this.rankView= new RankView(this.listUser, account);
         this.rankView.setVisible(true);
         this.rankView.addHomeAcction(new HomeAction());
     }
@@ -37,6 +37,9 @@ public class RankController {
             Message result = MainController.receiveData();
             if (result instanceof Message) {
                 listUser = (ArrayList<Account>) result.getContent();
+                for(Account account: listUser){
+                    System.out.println(account.getName());
+                }
             }
             Collections.sort(listUser, new RankController.PointComparator());
             return listUser;

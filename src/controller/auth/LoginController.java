@@ -22,7 +22,7 @@ import view.auth.RegisterView;
  * @author dolong
  */
 public class LoginController{
-    private LoginView loginView;
+    private static LoginView loginView;
     public LoginController() {
         super();
         this.loginView = new LoginView();
@@ -30,7 +30,9 @@ public class LoginController{
         this.loginView.addLoginAction(new LoginAction());
         this.loginView.addRegisterAction(new RegisterAction());
     }
-
+    public static void setViewVisible(){
+        loginView.setVisible(true);
+    }
     class LoginAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ae) {

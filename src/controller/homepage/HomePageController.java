@@ -6,6 +6,7 @@
 package controller.homepage;
 
 import controller.MainController;
+import controller.auth.LoginController;
 import controller.rank.RankController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,7 +78,8 @@ public class HomePageController{
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
                 MainController.sendData(message);
-                new LoginView().setVisible(true);
+                LoginController.setViewVisible();
+                homePageView.dispose();
             }
         }
     }

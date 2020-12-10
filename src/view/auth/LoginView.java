@@ -17,10 +17,8 @@ import model.Account;
  */
 public class LoginView extends javax.swing.JFrame {
 
-//    private MainController mainController;
     public LoginView( ) {
         initComponents();
-//        this.mainController = mainController;
         this.setLocationRelativeTo(null);
     }
 
@@ -37,6 +35,7 @@ public class LoginView extends javax.swing.JFrame {
     public void addRegisterAction(ActionListener al){
         btnRegister.addActionListener(al);
     }
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
