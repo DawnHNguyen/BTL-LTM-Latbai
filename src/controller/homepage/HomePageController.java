@@ -15,9 +15,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
-import model.Type;
+import static model.Type.LIST_ONLINE;
 import view.auth.LoginView;
 import view.homepage.HomePageView;
 
@@ -33,33 +34,34 @@ public class HomePageController {
 
     public HomePageController(Account account) {
         this.account = account;
-        this.listUser = reciveListUser();
+        MainController.sendData(new Message(null, LIST_ONLINE));
+
+    }
+
+    public void displayUsers() {
         this.homePageView = new HomePageView(this.listUser, account);
+        listUser.forEach(user -> System.out.println(user.getName()));
         this.homePageView.setVisible(true);
         this.homePageView.addLogoutAcction(new LogoutAction());
         this.homePageView.addInviteAcction(new InviteAction());
         this.homePageView.addRankingAcction(new RankingAction());
     }
 
-    public ArrayList<Account> reciveListUser() {
-        ArrayList<Account> listUser = new ArrayList<>();
-        try {
-            MainController.sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = MainController.receiveData();
-            if (result instanceof Message) {
-                listUser = (ArrayList<Account>) result.getContent();
-            }
-            Collections.sort(listUser, new PointComparator());
-            return listUser;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return listUser;
+    public void reciveListUser(ArrayList<Account> listUser) {
+        this.listUser = listUser;
+        Collections.sort(listUser, new PointComparator());
     }
 
-    public static void setViewVisible() {
-        homePageView.setVisible(true);
-        homePageView.startThread();
+    public void setViewVisible(boolean isVisible) {
+        homePageView.setVisible(isVisible);
+    }
+
+    public void showMessage(String content) {
+        JOptionPane.showMessageDialog(homePageView, content);
+    }
+
+    public int showConfirmDialog(String content) {
+        return JOptionPane.showConfirmDialog(homePageView, content);
     }
 
     class PointComparator implements Comparator<Account> {
@@ -85,7 +87,6 @@ public class HomePageController {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
                 MainController.sendData(message);
-                LoginController.setViewVisible();
                 homePageView.dispose();
             }
         }
@@ -96,12 +97,11 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
-            System.out.println("Moi "+acc.getId());
+            System.out.println("Moi " + acc.getId());
             Message message = new Message(acc, model.Type.CHALLENGE);
             if (message instanceof Message) {
                 MainController.sendData(message);
                 System.out.println("da gui");
-////                homePageView.dispose();
             }
         }
     }

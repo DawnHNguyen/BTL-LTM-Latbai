@@ -23,6 +23,9 @@ public class RegisterController{
         this.registerView.setVisible(true);
         this.registerView.addRegisterAction(new RegisterAction());
     }
+    public void showMessage(String content) {
+        JOptionPane.showMessageDialog(registerView, content);
+    }
 
     class RegisterAction implements ActionListener {
 
@@ -35,18 +38,6 @@ public class RegisterController{
                 Message message = new Message(account, model.Type.REGISTER);
                 if (message instanceof Message) {
                     MainController.sendData(message);
-                    Message result = MainController.receiveData();
-                    if (result instanceof Message) {
-                        if (result.getType() == model.Type.REGISTER_SUCCESS) {
-                            JOptionPane.showMessageDialog(registerView, "Register success");
-                            Account acc = (Account) result.getContent();
-                            System.out.println("user name is" + acc.getUserName());
-                            registerView.dispose();
-                            new HomePageController(acc);
-                        } else {
-                            JOptionPane.showMessageDialog(registerView, "Registern not success");
-                        }
-                    }
                 } else {
                     JOptionPane.showMessageDialog(registerView, "Check your login!!");
                 }

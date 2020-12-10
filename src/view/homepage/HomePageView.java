@@ -51,57 +51,58 @@ public class HomePageView extends javax.swing.JFrame {
         setTable(listUsers);
         jlbAccount.setText("Xin chao " + account.getName());
         isRunning = true;
-        listenChallenge = new Runnable() {
-            @Override
-            public void run() {
-                while (isRunning) {
-                    System.out.println("runnning");
-                    Message result = null;
-                    result = MainController.receiveData();
-                    if (result instanceof Message) {
-//                        Account accountRecived = (Account) result.getContent();
-                        result = (Message) result;
-                        if (result.getType() == INVITE_CHALLENGE) {
-                            Account accountRecived = (Account) result.getContent();
-
-                            int isAccept = JOptionPane.showConfirmDialog(null, accountRecived.getName() + " want to challege you in a game");
-                            if (isAccept == JOptionPane.YES_OPTION) {
-                                Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
-                                System.out.println("accept");
-                                MainController.sendData(response);
-                            } else {
-                                Message response = new Message(accountRecived, REJECT_CHALLENGE);
-                                MainController.sendData(response);
-                            }
-                        }
-                        if (result.getType() == ACCEPT_CHALLENGE) {
-                            Game game = (Game) result.getContent();
-                            new GameLatBai(0, 0, game.getDebai());
-                        } 
-                        if (result.getType() == REJECT_CHALLENGE) {
-                            Account accountRecived = (Account) result.getContent();
-                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
-                        }
-                        if (result.getType() == PLAYING) {
-                            Account accountRecived = (Account) result.getContent();
-                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " playing a game with someone else!");
-                        }
-                    }
-                }
-            }
-        };
-        thread = new Thread(listenChallenge);
-        thread.start();
+//        listenChallenge = new Runnable() {
+//            @Override
+//            public void run() {
+//                while (isRunning) {
+//                    System.out.println("runnning");
+//                    Message result = null;
+//                    result = MainController.receiveData();
+//                    if (result instanceof Message) {
+////                        Account accountRecived = (Account) result.getContent();
+//                        result = (Message) result;
+//                        if (result.getType() == INVITE_CHALLENGE) {
+//                            Account accountRecived = (Account) result.getContent();
+//
+//                            int isAccept = JOptionPane.showConfirmDialog(null, accountRecived.getName() + " want to challege you in a game");
+//                            if (isAccept == JOptionPane.YES_OPTION) {
+//                                Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
+//                                System.out.println("accept");
+//                                MainController.sendData(response);
+//                            } else {
+//                                Message response = new Message(accountRecived, REJECT_CHALLENGE);
+//                                MainController.sendData(response);
+//                            }
+//                        }
+//                        if (result.getType() == ACCEPT_CHALLENGE) {
+//                            Game game = (Game) result.getContent();
+//                            new GameLatBai(0, 0, game.getDebai());
+//                        } 
+//                        if (result.getType() == REJECT_CHALLENGE) {
+//                            Account accountRecived = (Account) result.getContent();
+//                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
+//                        }
+//                        if (result.getType() == PLAYING) {
+//                            Account accountRecived = (Account) result.getContent();
+//                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " playing a game with someone else!");
+//                        }
+//                    }
+//                }
+//            }
+//        };
+//        thread = new Thread(listenChallenge);
+//        thread.start();
     }
 
     public void stopThread() {
         System.out.println("stop thread");
         isRunning = false;
+        thread.interrupt();
     }
 
     public void startThread() {
         isRunning = true;
-//        thread = new Thread(listenChallenge);
+        thread = new Thread(listenChallenge);
         thread.start();
     }
 

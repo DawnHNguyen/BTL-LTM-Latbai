@@ -26,6 +26,8 @@
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Type.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Message.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/game/GameLatBai_2.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/game/GameController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/LoginView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
@@ -36,6 +38,7 @@
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/rank/RankController.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Account.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
+            <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/btl_gamelapbai/BTL_GameLapBai.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/rank/RankView.java</file>
         </group>
     </open-files>

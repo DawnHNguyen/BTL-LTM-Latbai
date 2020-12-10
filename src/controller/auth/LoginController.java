@@ -21,43 +21,43 @@ import view.auth.RegisterView;
  *
  * @author dolong
  */
-public class LoginController{
-    private static LoginView loginView;
+public class LoginController {
+
+    private LoginView loginView;
+
     public LoginController() {
         super();
         this.loginView = new LoginView();
-        this.loginView.setVisible(true);    
+        this.loginView.setVisible(true);
         this.loginView.addLoginAction(new LoginAction());
         this.loginView.addRegisterAction(new RegisterAction());
     }
-    public static void setViewVisible(){
-        loginView.setVisible(true);
+
+    public void setViewVisible(boolean isVisible) {
+        loginView.setVisible(isVisible);
     }
+
+    public void showMessage(String content) {
+        JOptionPane.showMessageDialog(loginView, content);
+
+    }
+
     class LoginAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                MainController.sendData(message);
-                Message result = MainController.receiveData();
-                if (result instanceof Message) {
-                    if (result.getType() != model.Type.LOGIN_SUCCESS) {
-                        JOptionPane.showMessageDialog(loginView, "User not available");
-                    } else {
-                        JOptionPane.showMessageDialog(loginView, "Login success");
-                        Account acc = (Account)result.getContent();
-                        System.out.println("ID "+acc.getId());
-                        new HomePageController(acc);
-                        loginView.setVisible(false);
-                    }
-                }
+                MainController.sendData(message);              
             } else {
                 JOptionPane.showMessageDialog(loginView, "Check your login!!");
             }
         }
     }
+
     class RegisterAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             new RegisterController();

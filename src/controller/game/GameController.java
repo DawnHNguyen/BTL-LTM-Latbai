@@ -40,7 +40,7 @@ public class GameController {
                 Message message = new Message(game, model.Type.CANCEL_GAME);
                 if (message instanceof Message) {
                     MainController.sendData(message);
-                    HomePageController.setViewVisible();
+//                    HomePageController.setViewVisible();
                 }
             }
         }
