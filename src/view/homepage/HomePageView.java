@@ -37,8 +37,8 @@ public class HomePageView extends javax.swing.JFrame {
     DefaultTableModel model;
     ArrayList<Account> listUsers;
     private Account account;
-    Runnable listenChallenge;
-    Thread t = new Thread(listenChallenge);
+//    Runnable listenChallenge;
+//    Thread t = new Thread(listenChallenge);
     public HomePageView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -46,7 +46,7 @@ public class HomePageView extends javax.swing.JFrame {
         this.listUsers = listUsers;
         setTable(listUsers);
         jlbAccount.setText("Xin chao "+account.getName());
-        listenChallenge = new Runnable() {
+        Runnable listenChallenge = new Runnable() {
             @Override
             public void run() {
                 while (!Thread.currentThread().isInterrupted()) {
@@ -55,7 +55,9 @@ public class HomePageView extends javax.swing.JFrame {
                     Account account = (Account) result.getContent();
                     if (result instanceof Message) {
                         result = (Message) result;
+                        System.out.println("helll");
                         if (result.getType() == INVITE_CHALLENGE) {
+                            System.out.println("co nguoi moi");
                             int isAccept = JOptionPane.showConfirmDialog(null, account.getName() + " want to challege you in a game");
                             if (isAccept == JOptionPane.YES_OPTION) {
                                 Message response = new Message(account, ACCEPT_CHALLENGE);
@@ -79,7 +81,7 @@ public class HomePageView extends javax.swing.JFrame {
                 }
             }
         };
-//        Thread t = new Thread(listenChallenge);
+        Thread t = new Thread(listenChallenge);
         t.start();
     }
 

@@ -96,6 +96,7 @@ public class HomePageController {
             Message message = new Message(acc, model.Type.CHALLENGE);
             if (message instanceof Message) {
                 MainController.sendData(message);
+                System.out.println("da gui");
 ////                homePageView.dispose();
             }
         }
