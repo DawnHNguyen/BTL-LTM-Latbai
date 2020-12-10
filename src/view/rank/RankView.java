@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import static org.omg.CORBA.ORB.init;
 
 /**
  *
@@ -27,13 +26,9 @@ public class RankView extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tblUser.getModel();
-        System.out.println("ok");
         this.listUsers = listUsers;
-        System.out.println(listUsers.size());
-        listUsers.forEach((listUser) -> {
-            System.out.println("12334567890 " + listUser.getName());
-        });
-        jlbName.setText(account.getName());
+       
+        jlbName.setText("Xin chao "+account.getName());
         setTable(listUsers);
     }
 
@@ -125,8 +120,7 @@ public class RankView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btlHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlHomeActionPerformed
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btlHomeActionPerformed
    
 //    public Account getAccountSelected() {

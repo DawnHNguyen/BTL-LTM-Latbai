@@ -69,8 +69,8 @@ public class RankController {
         
         @Override
         public void actionPerformed(ActionEvent ah) {
-               new HomePageController(account);
-               rankView.setVisible(false);
+            HomePageController.setViewVisible();
+            rankView.setVisible(false);
         }
     }
 }

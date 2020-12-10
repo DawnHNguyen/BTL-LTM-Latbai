@@ -23,12 +23,13 @@ import view.homepage.HomePageView;
  *
  * @author dolong
  */
-public class HomePageController{
+public class HomePageController {
 
-    HomePageView homePageView;
+    static HomePageView homePageView;
     ArrayList<Account> listUser;
     Account account;
-    public HomePageController(Account account){
+
+    public HomePageController(Account account) {
         this.account = account;
         this.listUser = reciveListUser();
         this.homePageView = new HomePageView(this.listUser, account);
@@ -53,10 +54,13 @@ public class HomePageController{
         }
         return listUser;
     }
-    
+
+    public static void setViewVisible() {
+        homePageView.setVisible(true);
+    }
 
     class PointComparator implements Comparator<Account> {
-        
+
         @Override
         public int compare(Account user1, Account user2) {
             int point1 = user1.getPoint();
@@ -70,9 +74,9 @@ public class HomePageController{
             }
         }
     }
-    
+
     class LogoutAction implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
@@ -83,9 +87,9 @@ public class HomePageController{
             }
         }
     }
-    
+
     class InviteAction implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
@@ -96,12 +100,14 @@ public class HomePageController{
             }
         }
     }
+
     class RankingAction implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent ae) {
+            homePageView.setVisible(false);
             new RankController(account);
         }
     }
-     
+
 }

@@ -23,6 +23,7 @@ import model.Account;
 import model.Message;
 import static model.Type.ACCEPT_CHALLENGE;
 import static model.Type.INVITE_CHALLENGE;
+import static model.Type.PLAYING;
 import static model.Type.REJECT_CHALLENGE;
 import view.auth.LoginView;
 import view.rank.RankView;
@@ -69,8 +70,10 @@ public class HomePageView extends javax.swing.JFrame {
                             System.out.println("doi ti...");
                         }
                         if (result.getType() == REJECT_CHALLENGE) {
-                            System.out.println("REJECT_CHALLENGE...");
                             JOptionPane.showMessageDialog(null, account.getName() + " dont want to challege you in a game");
+                        }
+                        if (result.getType() == PLAYING) {
+                            JOptionPane.showMessageDialog(null, account.getName() + " playing a game with someone else!");
                         }
                     }
                 }

@@ -26,6 +26,7 @@ public enum Type {
     INVITE_CHALLENGE,
     ACCEPT_CHALLENGE,
     REJECT_CHALLENGE,
+    PLAYING,
     
     RANKING
 }
