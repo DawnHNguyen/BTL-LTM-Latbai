@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
+import model.Game;
 import model.Message;
 import static model.Type.ACCEPT_CHALLENGE;
 import static model.Type.INVITE_CHALLENGE;
@@ -58,9 +59,11 @@ public class HomePageView extends javax.swing.JFrame {
                     Message result = null;
                     result = MainController.receiveData();
                     if (result instanceof Message) {
-                        Account accountRecived = (Account) result.getContent();
+//                        Account accountRecived = (Account) result.getContent();
                         result = (Message) result;
                         if (result.getType() == INVITE_CHALLENGE) {
+                            Account accountRecived = (Account) result.getContent();
+
                             int isAccept = JOptionPane.showConfirmDialog(null, accountRecived.getName() + " want to challege you in a game");
                             if (isAccept == JOptionPane.YES_OPTION) {
                                 Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
@@ -72,12 +75,15 @@ public class HomePageView extends javax.swing.JFrame {
                             }
                         }
                         if (result.getType() == ACCEPT_CHALLENGE) {
-                           new GameLatBai(0, 0);
+                            Game game = (Game) result.getContent();
+                            new GameLatBai(0, 0, game.getDebai());
                         }
                         if (result.getType() == REJECT_CHALLENGE) {
+                            Account accountRecived = (Account) result.getContent();
                             JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
                         }
                         if (result.getType() == PLAYING) {
+                            Account accountRecived = (Account) result.getContent();
                             JOptionPane.showMessageDialog(null, accountRecived.getName() + " playing a game with someone else!");
                         }
                     }
@@ -87,7 +93,7 @@ public class HomePageView extends javax.swing.JFrame {
         thread = new Thread(listenChallenge);
         thread.start();
     }
-    
+
     public void stopThread() {
         isRunning = false;
     }

@@ -96,6 +96,7 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
+            System.out.println("Moi "+acc.getId());
             Message message = new Message(acc, model.Type.CHALLENGE);
             if (message instanceof Message) {
                 MainController.sendData(message);
