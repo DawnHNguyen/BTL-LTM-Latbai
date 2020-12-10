@@ -28,5 +28,6 @@ public enum Type {
     REJECT_CHALLENGE,
     PLAYING,
     
-    RANKING
+    RANKING, 
+    CANCEL_GAME
 }

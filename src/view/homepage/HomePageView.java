@@ -77,7 +77,7 @@ public class HomePageView extends javax.swing.JFrame {
                         if (result.getType() == ACCEPT_CHALLENGE) {
                             Game game = (Game) result.getContent();
                             new GameLatBai(0, 0, game.getDebai());
-                        }
+                        } 
                         if (result.getType() == REJECT_CHALLENGE) {
                             Account accountRecived = (Account) result.getContent();
                             JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
@@ -95,6 +95,7 @@ public class HomePageView extends javax.swing.JFrame {
     }
 
     public void stopThread() {
+        System.out.println("stop thread");
         isRunning = false;
     }
 
@@ -156,7 +157,7 @@ public class HomePageView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Rank", "Player", "Point", "Status"
+                "Stt", "Player", "Point", "Status"
             }
         ) {
             Class[] types = new Class [] {

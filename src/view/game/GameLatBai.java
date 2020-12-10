@@ -190,13 +190,15 @@ public final class GameLatBai extends JFrame implements ActionListener {
         } else {
             System.exit(0);
         }
-
+        
     }
-
+    public void addCancelAcction(ActionListener ah){
+        out_bt.addActionListener(ah);
+    }
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == out_bt) {
-            form.setVisible(true);
-        }
+//        if (e.getSource() == out_bt) {
+//            form.setVisible(true);
+//        }
         this.timer2.start();
         String s = e.getActionCommand();
         int k = s.indexOf(32);

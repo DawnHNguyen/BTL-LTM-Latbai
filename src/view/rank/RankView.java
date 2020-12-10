@@ -25,6 +25,7 @@ public class RankView extends javax.swing.JFrame {
     public RankView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
+        
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         jlbName.setText("Xin chao "+account.getName());
