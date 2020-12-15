@@ -19,17 +19,16 @@ import javax.swing.table.DefaultTableModel;
 public class RankView extends javax.swing.JFrame {
 
     DefaultTableModel model;
-    private Frame frame;
     ArrayList<Account> listUsers;
 
     public RankView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
-        
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         jlbName.setText("Xin chao "+account.getName());
-        setTable(listUsers);
+//        setTable(listUsers);
+        System.out.println("ranking...");
         System.out.println("here");
     }
 
@@ -123,20 +122,7 @@ public class RankView extends javax.swing.JFrame {
     private void btlHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlHomeActionPerformed
         
     }//GEN-LAST:event_btlHomeActionPerformed
-   
-//    public Account getAccountSelected() {
-//        int row = tblUser.getSelectedRow();
-//        String name = tblUser.getValueAt(row, 1).toString();
-//        int point = (int) tblUser.getValueAt(row, 2);
-//        System.out.println("name selected " + name + " " + "point" + point);
-//        for (Account acc : listUsers) {
-//            if (acc.getName().equals(name) && acc.getPoint() == point) {
-//                return acc;
-//            }
-//        }
-//        return null;
-//    }
-    
+
      public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {

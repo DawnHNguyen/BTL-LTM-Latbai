@@ -23,7 +23,7 @@ import view.auth.RegisterView;
  */
 public class LoginController {
 
-    private LoginView loginView;
+    private static LoginView loginView;
 
     public LoginController() {
         super();
@@ -33,7 +33,7 @@ public class LoginController {
         this.loginView.addRegisterAction(new RegisterAction());
     }
 
-    public void setViewVisible(boolean isVisible) {
+    public static void setViewVisible(boolean isVisible) {
         loginView.setVisible(isVisible);
     }
 
@@ -49,7 +49,7 @@ public class LoginController {
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                MainController.sendData(message);              
+                MainController.sendData(message);
             } else {
                 JOptionPane.showMessageDialog(loginView, "Check your login!!");
             }

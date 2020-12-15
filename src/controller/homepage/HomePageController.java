@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
+import model.Type;
 import static model.Type.LIST_ONLINE;
 import view.auth.LoginView;
 import view.homepage.HomePageView;
@@ -35,24 +36,32 @@ public class HomePageController {
     public HomePageController(Account account) {
         this.account = account;
         MainController.sendData(new Message(null, LIST_ONLINE));
-
     }
 
     public void displayUsers() {
         this.homePageView = new HomePageView(this.listUser, account);
-        listUser.forEach(user -> System.out.println(user.getName()));
         this.homePageView.setVisible(true);
-        this.homePageView.addLogoutAcction(new LogoutAction());
-        this.homePageView.addInviteAcction(new InviteAction());
-        this.homePageView.addRankingAcction(new RankingAction());
+        this.homePageView.setTable(listUser);
+        this.homePageView.addLogoutAction(new LogoutAction());
+        this.homePageView.addInviteAction(new InviteAction());
+        this.homePageView.addRankingAction(new RankingAction());
+    }
+
+    public void updateUsersOnline(ArrayList<Account> listUser) {
+        this.listUser = listUser;
+        for(Account acc: listUser){
+            System.out.println(acc.getName()+ " acc "+ acc.getId());
+        }
+        if (listUser != null && homePageView != null) {
+            this.homePageView.setTable(listUser);
+        }
     }
 
     public void reciveListUser(ArrayList<Account> listUser) {
         this.listUser = listUser;
-        Collections.sort(listUser, new PointComparator());
     }
 
-    public void setViewVisible(boolean isVisible) {
+    public static void setViewVisible(boolean isVisible) {
         homePageView.setVisible(isVisible);
     }
 
@@ -64,22 +73,6 @@ public class HomePageController {
         return JOptionPane.showConfirmDialog(homePageView, content);
     }
 
-    class PointComparator implements Comparator<Account> {
-
-        @Override
-        public int compare(Account user1, Account user2) {
-            int point1 = user1.getPoint();
-            int point2 = user2.getPoint();
-            if (point1 == point2) {
-                return 0;
-            } else if (point1 < point2) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-    }
-
     class LogoutAction implements ActionListener {
 
         @Override
@@ -88,7 +81,17 @@ public class HomePageController {
             if (message instanceof Message) {
                 MainController.sendData(message);
                 homePageView.dispose();
+                LoginController.setViewVisible(true);
             }
+        }
+    }
+
+    class ReloadAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            Message message = new Message(account, model.Type.LIST_ONLINE);
+            MainController.sendData(message);
         }
     }
 
@@ -111,9 +114,7 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             homePageView.setVisible(false);
-            homePageView.stopThread();
-            System.out.println("ok");
-            new RankController(account);
+            MainController.sendData(new Message(null, Type.RANKING));
         }
     }
 

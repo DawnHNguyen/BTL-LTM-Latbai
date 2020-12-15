@@ -7,7 +7,9 @@ package controller;
 
 import controller.auth.LoginController;
 import controller.auth.RegisterController;
+import controller.game.GameController;
 import controller.homepage.HomePageController;
+import controller.rank.RankController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -45,6 +47,8 @@ public class MainController {
     private LoginController loginController;
     private HomePageController homePageController;
     private RegisterController registerController;
+    private RankController rankController;
+    private GameController gameController;
     Runnable listenChallenge;
     static Thread thread;
 
@@ -61,7 +65,6 @@ public class MainController {
                         switch (result.getType()) {
                             case LOGIN_SUCCESS:
                                 currentAccount = (Account) result.getContent();
-                                loginController.showMessage("Login success");
                                 loginController.setViewVisible(false);
                                 homePageController = new HomePageController(currentAccount);
                                 break;
@@ -78,9 +81,13 @@ public class MainController {
                                 break;
                             case LIST_ONLINE:
                                 ArrayList<Account> listUser = (ArrayList<Account>) result.getContent();
-                                System.out.println("list user");
                                 homePageController.reciveListUser(listUser);
                                 homePageController.displayUsers();
+                                break;
+                            case UPDATE_LIST_ONLINE:
+                                listUser = (ArrayList<Account>) result.getContent();
+                                homePageController.updateUsersOnline(listUser);
+                                System.out.println("update");
                                 break;
                             case INVITE_CHALLENGE:
                                 accountRecived = (Account) result.getContent();
@@ -96,7 +103,7 @@ public class MainController {
                                 break;
                             case REJECT_CHALLENGE:
                                 accountRecived = (Account) result.getContent();
-                                homePageController.showMessage(accountRecived.getName() + " dont want to challege you in a game");
+                                homePageController.showMessage(accountRecived.getName() + " DONT WANT TO PLAY WITH YOU!");
                                 break;
                             case PLAYING:
                                 accountRecived = (Account) result.getContent();
@@ -104,7 +111,13 @@ public class MainController {
                                 break;
                             case ACCEPT_CHALLENGE:
                                 Game game = (Game) result.getContent();
-                                new GameLatBai(0, 0, game.getDebai());
+                                gameController = new GameController(game, currentAccount);
+                                break;
+                            case RANKING:
+                                listUser = (ArrayList<Account>) result.getContent();
+                                rankController = new RankController(currentAccount);
+                                rankController.reciveListUser(listUser);
+                                rankController.displayUsers();
                                 break;
                         }
                     }

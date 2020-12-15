@@ -24,26 +24,17 @@ public class RankController {
     Account account;
     public RankController(Account account) {
         this.account = account;
-        this.listUser = reciveListUser();
-        this.rankView= new RankView(this.listUser, account);
+        
+    }
+    public void displayUsers() {
+        this.rankView = new RankView(this.listUser, account);
         this.rankView.setVisible(true);
+        this.rankView.setTable(listUser);
         this.rankView.addHomeAcction(new HomeAction());
     }
-
-    public ArrayList<Account> reciveListUser() {
-        ArrayList<Account> listUser = new ArrayList<Account>();
-        try {
-            MainController.sendData(new Message(null, Type.RANKING));
-            Message result = MainController.receiveData();
-            if (result instanceof Message) {
-                listUser = (ArrayList<Account>) result.getContent();
-            }
-            Collections.sort(listUser, new RankController.PointComparator());
-            return listUser;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return listUser;
+    public void reciveListUser(ArrayList<Account> listUser) {
+        this.listUser = listUser;
+        Collections.sort(listUser, new RankController.PointComparator());
     }
 
     class PointComparator implements Comparator<Account> {
@@ -63,10 +54,9 @@ public class RankController {
     }
     // quay về trang home
      class HomeAction implements ActionListener {
-        
         @Override
         public void actionPerformed(ActionEvent ah) {
-//            HomePageController.setViewVisible();
+            HomePageController.setViewVisible(true);
             rankView.setVisible(false);
         }
     }

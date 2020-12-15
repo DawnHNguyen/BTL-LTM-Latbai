@@ -10,6 +10,7 @@ import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import model.Account;
 import model.Game;
 import model.Message;
 import view.game.GameLatBai;
@@ -22,9 +23,11 @@ public class GameController {
 
     private GameLatBai gameLatBai;
     private Game game;
+    private Account account;
 
-    public GameController(Game game) {
+    public GameController(Game game, Account account) {
         this.game = game;
+        this.account = account;
         gameLatBai = new GameLatBai(0, 0, game.getDebai());
         gameLatBai.addCancelAcction(new CancelAction());
     }

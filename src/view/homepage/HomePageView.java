@@ -1,34 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.homepage;
 
-import controller.MainController;
-import controller.homepage.HomePageController;
-import controller.rank.RankController;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
-import model.Game;
-import model.Message;
-import static model.Type.ACCEPT_CHALLENGE;
-import static model.Type.INVITE_CHALLENGE;
-import static model.Type.PLAYING;
-import static model.Type.REJECT_CHALLENGE;
-import view.auth.LoginView;
-import view.game.GameLatBai;
-import view.rank.RankView;
 
 /**
  *
@@ -39,82 +15,26 @@ public class HomePageView extends javax.swing.JFrame {
     DefaultTableModel model;
     ArrayList<Account> listUsers;
     private Account account;
-    Runnable listenChallenge;
-    static Thread thread;
-    static boolean isRunning;
 
     public HomePageView(ArrayList<Account> listUsers, Account account) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.account = account;
         model = (DefaultTableModel) tblUser.getModel();
         this.listUsers = listUsers;
         setTable(listUsers);
         jlbAccount.setText("Xin chao " + account.getName());
-        isRunning = true;
-//        listenChallenge = new Runnable() {
-//            @Override
-//            public void run() {
-//                while (isRunning) {
-//                    System.out.println("runnning");
-//                    Message result = null;
-//                    result = MainController.receiveData();
-//                    if (result instanceof Message) {
-////                        Account accountRecived = (Account) result.getContent();
-//                        result = (Message) result;
-//                        if (result.getType() == INVITE_CHALLENGE) {
-//                            Account accountRecived = (Account) result.getContent();
-//
-//                            int isAccept = JOptionPane.showConfirmDialog(null, accountRecived.getName() + " want to challege you in a game");
-//                            if (isAccept == JOptionPane.YES_OPTION) {
-//                                Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
-//                                System.out.println("accept");
-//                                MainController.sendData(response);
-//                            } else {
-//                                Message response = new Message(accountRecived, REJECT_CHALLENGE);
-//                                MainController.sendData(response);
-//                            }
-//                        }
-//                        if (result.getType() == ACCEPT_CHALLENGE) {
-//                            Game game = (Game) result.getContent();
-//                            new GameLatBai(0, 0, game.getDebai());
-//                        } 
-//                        if (result.getType() == REJECT_CHALLENGE) {
-//                            Account accountRecived = (Account) result.getContent();
-//                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " dont want to challege you in a game");
-//                        }
-//                        if (result.getType() == PLAYING) {
-//                            Account accountRecived = (Account) result.getContent();
-//                            JOptionPane.showMessageDialog(null, accountRecived.getName() + " playing a game with someone else!");
-//                        }
-//                    }
-//                }
-//            }
-//        };
-//        thread = new Thread(listenChallenge);
-//        thread.start();
     }
 
-    public void stopThread() {
-        System.out.println("stop thread");
-        isRunning = false;
-        thread.interrupt();
-    }
-
-    public void startThread() {
-        isRunning = true;
-        thread = new Thread(listenChallenge);
-        thread.start();
-    }
-
-    public void addLogoutAcction(ActionListener al) {
+    public void addLogoutAction(ActionListener al) {
         jbtLogout.addActionListener(al);
     }
 
-    public void addInviteAcction(ActionListener al) {
+    public void addInviteAction(ActionListener al) {
         jbtInvite.addActionListener(al);
     }
 
-    public void addRankingAcction(ActionListener al) {
+    public void addRankingAction(ActionListener al) {
         jbtRanking.addActionListener(al);
     }
 
@@ -122,10 +42,8 @@ public class HomePageView extends javax.swing.JFrame {
         int row = tblUser.getSelectedRow();
         String name = tblUser.getValueAt(row, 1).toString();
         int point = (int) tblUser.getValueAt(row, 2);
-        System.out.println("name selected " + name + " " + "point" + point);
         for (Account acc : listUsers) {
             if (acc.getName().equals(name) && acc.getPoint() == point) {
-                System.out.println(acc.getId());
                 return acc;
             }
         }
@@ -151,7 +69,7 @@ public class HomePageView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 48)); // NOI18N
-        jLabel1.setText("Home Page");
+        jLabel1.setText("Home");
 
         tblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,26 +130,31 @@ public class HomePageView extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtLogout)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jlbAccount)
-                        .addGap(70, 70, 70))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlbAccount)
+                                .addGap(70, 70, 70))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(149, 149, 149)
+                                .addComponent(jLabel1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtLogout)
-                    .addComponent(jlbAccount))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtLogout)
+                            .addComponent(jlbAccount)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtInvite)
                     .addComponent(jbtRanking))
@@ -242,26 +165,22 @@ public class HomePageView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLogoutActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbtLogoutActionPerformed
-
     private void jbtInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInviteActionPerformed
-//        Account acc = getAccountSelected();
-
     }//GEN-LAST:event_jbtInviteActionPerformed
-
     private void jbtRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRankingActionPerformed
-
     }//GEN-LAST:event_jbtRankingActionPerformed
 
-    public void setTable(List<Account> list) {
+    public void setTable(ArrayList<Account> listUser) {
+        this.listUsers = listUser;
         model.setRowCount(0);
-        if (list instanceof ArrayList) {
-            int rank = 1;
-            for (Account user : list) {
-                model.addRow(user.toObjects(rank++));
+        int rank = 1;
+        for (Account acc : listUser) {
+            if (!acc.equals(this.account)) {
+                model.addRow(acc.toObjects(rank++));
             }
         }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

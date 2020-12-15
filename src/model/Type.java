@@ -21,6 +21,7 @@ public enum Type {
     REGISTER_FAIL,
     
     LIST_ONLINE,
+    UPDATE_LIST_ONLINE,
 
     CHALLENGE,
     INVITE_CHALLENGE,
