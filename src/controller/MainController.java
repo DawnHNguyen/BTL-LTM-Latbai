@@ -22,9 +22,9 @@ import static model.Type.INVITE_CHALLENGE;
 public class MainController {
 
     private static Socket mySocket;
-    private static String serverHost = "localhost";
-//    private String serverHost = "192.168.43.57";
-//    private String serverHost = "192.168.1.152";
+    
+  //    private String serverHost = "192.168.43.57";
+   private String serverHost = "192.168.43.196";
 //    private String serverHost = "172.27.90.65";
 //    private String serverHost = "172.19.201.17";
     private static int serverPort = 3000;
