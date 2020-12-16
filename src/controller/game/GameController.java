@@ -28,8 +28,12 @@ public class GameController {
     public GameController(Game game, Account account) {
         this.game = game;
         this.account = account;
-        gameLatBai = new GameLatBai(0, 0, game);
+        gameLatBai = new GameLatBai(0, 0, game, this.account);
         gameLatBai.addCancelAcction(new CancelAction());
+    }
+
+    public void showMessage(String content) {
+        JOptionPane.showMessageDialog(gameLatBai, content);
     }
 
     class CancelAction implements ActionListener {

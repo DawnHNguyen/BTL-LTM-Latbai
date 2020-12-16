@@ -86,15 +86,6 @@ public class HomePageController {
         }
     }
 
-//    class ReloadAction implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(ActionEvent ae) {
-//            Message message = new Message(account, model.Type.LIST_ONLINE);
-//            MainController.sendData(message);
-//        }
-//    }
-
     class InviteAction implements ActionListener {
 
         @Override

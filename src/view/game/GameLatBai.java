@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.border.Border;
+import model.Account;
 import model.Game;
 import model.Message;
 import static model.Type.RESULT_GAME;
@@ -60,10 +61,12 @@ public final class GameLatBai extends JFrame implements ActionListener {
     private int score;
     private int[][] debai;
     private Game game;
+    private Account account;
 
-    public GameLatBai(int k, int score, Game game) {
+    public GameLatBai(int k, int score, Game game, Account account) {
         this.game = game;
         this.score = score;
+        this.account = account;
         this.debai = game.getDebai();
         this.bt = new JButton[this.maxXY][this.maxXY];
         this.tick = new boolean[this.maxXY][this.maxXY];
@@ -192,7 +195,11 @@ public final class GameLatBai extends JFrame implements ActionListener {
         if (select == 0) {
             this.cn = this.init(0, this.score, this.debai);
         } else {
-            this.game.getPlayer1().setPoint(this.score);
+            if (this.game.getPlayer1().getId() == this.account.getId()) {
+                this.game.getPlayer1().setPoint(this.score);
+            }if(this.game.getPlayer2().getId() == this.account.getId()){
+                this.game.getPlayer2().setPoint(this.score);
+            }
             MainController.sendData(new Message(this.game, RESULT_GAME));
             System.out.println("da gui ket qua");
             HomePageController.setViewVisible(true);

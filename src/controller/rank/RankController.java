@@ -6,7 +6,6 @@
 package controller.rank;
 
 import controller.MainController;
-import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import model.Account;
 import model.Message;
-import model.Type;
 import view.rank.RankView;
 
 public class RankController {
@@ -22,6 +20,7 @@ public class RankController {
     private RankView rankView;
     ArrayList<Account> listUser;
     Account account;
+    
     public RankController(Account account) {
         this.account = account;
         
@@ -31,6 +30,7 @@ public class RankController {
         this.rankView.setVisible(true);
         this.rankView.setTable(listUser);
         this.rankView.addHomeAcction(new HomeAction());
+        this.rankView.addHistoryAcction(new HistoryAction());
     }
     public void reciveListUser(ArrayList<Account> listUser) {
         this.listUser = listUser;
@@ -52,12 +52,30 @@ public class RankController {
             }
         }
     }
+    
+    
+    class HistoryAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            Account acc = rankView.getMemberSelected();
+            System.out.println("Chọn " + acc.getId());
+            Message message = new Message(acc, model.Type.HISTORY_GAME);
+            
+            if (message instanceof Message) {
+                MainController.sendData(message);
+                System.out.println("da gui");
+            }
+        }  
+    }
+    
     // quay về trang home
      class HomeAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ah) {
-            HomePageController.setViewVisible(true);
+           
             rankView.setVisible(false);
         }
     }
+     
 }

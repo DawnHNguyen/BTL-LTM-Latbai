@@ -8,6 +8,7 @@ package controller;
 import controller.auth.LoginController;
 import controller.auth.RegisterController;
 import controller.game.GameController;
+import controller.history.HistoryController;
 import controller.homepage.HomePageController;
 import controller.rank.RankController;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import model.Type;
 import static model.Type.PLAYING;
 import static model.Type.REJECT_CHALLENGE;
 import view.game.GameLatBai;
+import view.game.MessageView;
 
 /**
  *
@@ -33,11 +35,9 @@ import view.game.GameLatBai;
 public class MainController {
 
     private static Socket mySocket;
-    
-  //    private String serverHost = "192.168.43.57";
-//   private String serverHost = "192.168.43.196";
-   private String serverHost = "localhost";
-//    private String serverHost = "172.27.90.65";
+//    private String serverHost = "192.168.43.57";
+//  pivate String serverHost = "192.168.43.196";    
+    private String serverHost = "localhost";
 //    private String serverHost = "172.19.201.17";
     private static int serverPort = 3000;
     private static ObjectOutputStream oos;
@@ -45,11 +45,13 @@ public class MainController {
 
     private Account currentAccount;
     private Account accountRecived;
+    private Game game;
     private LoginController loginController;
     private HomePageController homePageController;
     private RegisterController registerController;
     private RankController rankController;
     private GameController gameController;
+    private HistoryController historyController;
     Runnable listenChallenge;
     static Thread thread;
 
@@ -113,7 +115,7 @@ public class MainController {
                                 homePageController.showMessage(accountRecived.getName() + " playing a game with someone else!");
                                 break;
                             case ACCEPT_CHALLENGE:
-                                Game game = (Game) result.getContent();
+                                game = (Game) result.getContent();
                                 gameController = new GameController(game, currentAccount);
                                 break;
                             case RANKING:
@@ -121,6 +123,16 @@ public class MainController {
                                 rankController = new RankController(currentAccount);
                                 rankController.reciveListUser(listUser);
                                 rankController.displayUsers();
+                                break;
+                            case HISTORY_GAME:
+                                ArrayList<Game> historyGames = (ArrayList<Game>) result.getContent();
+                                historyController = new HistoryController(currentAccount);
+                                historyController.reciveListGame(historyGames);
+                                historyController.displayGame();
+                                break;
+                            case RESULT_GAME:
+                                System.out.println("content "+ (String) result.getContent());
+                                gameController.showMessage((String) result.getContent());
                                 break;
                         }
                     }

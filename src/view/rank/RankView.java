@@ -43,6 +43,7 @@ public class RankView extends javax.swing.JFrame {
         tblUser = new javax.swing.JTable();
         btlHome = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnHistory = new javax.swing.JButton();
 
         jlbName.setText("jLabel2");
 
@@ -72,6 +73,8 @@ public class RankView extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(204, 0, 0));
         jLabel1.setText("Bảng Xếp Hạng Người Chơi ");
 
+        btnHistory.setText("History");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -79,14 +82,16 @@ public class RankView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(235, 235, 235)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(btlHome, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(57, 57, 57)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(btlHome, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(btnHistory)))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -96,9 +101,11 @@ public class RankView extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btlHome)
-                .addGap(31, 31, 31))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btlHome)
+                    .addComponent(btnHistory))
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,7 +125,10 @@ public class RankView extends javax.swing.JFrame {
     private void btlHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlHomeActionPerformed
         
     }//GEN-LAST:event_btlHomeActionPerformed
-
+    
+    
+    
+    
      public void setTable(List<Account> list) {
         model.setRowCount(0);
         if (list instanceof ArrayList) {
@@ -128,12 +138,28 @@ public class RankView extends javax.swing.JFrame {
             }
         }
     }
-   
+   public void addHistoryAcction(ActionListener ah){
+        btnHistory.addActionListener(ah);
+    }
     public void addHomeAcction(ActionListener ah){
         btlHome.addActionListener(ah);
     }
+    public Account getMemberSelected() {
+        int row = tblUser.getSelectedRow();
+        String name = tblUser.getValueAt(row, 1).toString();
+        int point = (int) tblUser.getValueAt(row, 2);
+        for (Account acc : listUsers) {
+            if (acc.getName().equals(name) && acc.getPoint() == point) {
+                return acc;
+            }
+        }
+        return null;
+    }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btlHome;
+    private javax.swing.JButton btnHistory;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
