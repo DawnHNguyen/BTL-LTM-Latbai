@@ -35,7 +35,8 @@ public class MainController {
     private static Socket mySocket;
     
   //    private String serverHost = "192.168.43.57";
-   private String serverHost = "192.168.43.196";
+//   private String serverHost = "192.168.43.196";
+   private String serverHost = "localhost";
 //    private String serverHost = "172.27.90.65";
 //    private String serverHost = "172.19.201.17";
     private static int serverPort = 3000;
@@ -77,7 +78,7 @@ public class MainController {
                                 homePageController = new HomePageController(currentAccount);
                                 break;
                             case REGISTER_FAIL:
-                                registerController.showMessage("Registern not success");
+                                registerController.showMessage("Register not success");
                                 break;
                             case LIST_ONLINE:
                                 ArrayList<Account> listUser = (ArrayList<Account>) result.getContent();
