@@ -3,6 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/rank/RankView.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/game/GameLatBai.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/rank/RankController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/auth/RegisterController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/model/Game.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/homepage/HomePageController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/auth/LoginController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/game/subForm.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/game/GameLatBai_2.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
+            <file>file:/C:/Users/Admin%2088/OneDrive/Attachments/Desktop/BTL_GameLatBai/src/view/history/HistoryView.java</file>
+=======
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/game/GameLatBai.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/auth/LoginView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/MainController.java</file>
@@ -29,6 +46,7 @@
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/model/Account.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/view/homepage/HomePageView.java</file>
             <file>file:/home/dolong/Desktop/BTL_GameLatBai/src/controller/game/GameController.java</file>
+>>>>>>> f2ddb1ca9a91255048d62e34578f5ec707edd251
         </group>
     </open-files>
 </project-private>
