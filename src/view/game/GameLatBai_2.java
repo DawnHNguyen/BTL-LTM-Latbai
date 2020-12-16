@@ -50,7 +50,6 @@ public final class GameLatBai_2 extends JFrame implements ActionListener {
     private JButton out_bt;
     private JPanel pn;
     private JPanel pn2;
-    private subForm form;
     Container cn;
     Timer timer;
     Timer timer2;
@@ -146,7 +145,6 @@ public final class GameLatBai_2 extends JFrame implements ActionListener {
         cn.add(this.pn);
         cn.add(this.progressTime, "North");
         cn.add(this.pn2, "South");
-        form = new subForm();
         this.setVisible(true);
         this.setSize(this.n * 120, this.m * 170 + 90);
         this.setDefaultCloseOperation(3);
@@ -237,7 +235,6 @@ public final class GameLatBai_2 extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==out_bt){
-			form.setVisible(true);
 		}
         this.timer2.start();
         String s = e.getActionCommand();

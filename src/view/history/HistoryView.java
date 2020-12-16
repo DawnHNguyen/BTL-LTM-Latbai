@@ -5,18 +5,31 @@
  */
 package view.history;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import model.Account;
+
 /**
  *
  * @author Admin 88
  */
 public class HistoryView extends javax.swing.JFrame {
-
+DefaultTableModel model;
+    ArrayList<Account> listUsers;
+    private Account account;
     /**
      * Creates new form HistoryView
      */
-    public HistoryView() {
-        initComponents();
-    }
+    public Account getAccountSelected() {
+        int row = tblUser.getSelectedRow();
+        String name = tblUser.getValueAt(row, 1).toString();
+        int point = (int) tblUser.getValueAt(row, 2);
+        for (Account acc : listUsers) {
+            if (acc.getName().equals(name) && acc.getPoint() == point) {
+                return acc;
+            }
+        }
+        return null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +44,7 @@ public class HistoryView extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblGH = new javax.swing.JTable();
+        tblUser = new javax.swing.JTable();
         btnback = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
@@ -42,7 +55,7 @@ public class HistoryView extends javax.swing.JFrame {
 
         jLabel2.setText("Game History");
 
-        tblGH.setModel(new javax.swing.table.DefaultTableModel(
+        tblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -50,7 +63,7 @@ public class HistoryView extends javax.swing.JFrame {
                 "STT", "Player 1", "Player 2", "Winner", "Time"
             }
         ));
-        jScrollPane1.setViewportView(tblGH);
+        jScrollPane1.setViewportView(tblUser);
 
         btnback.setText("Back");
         btnback.addActionListener(new java.awt.event.ActionListener() {
@@ -66,14 +79,14 @@ public class HistoryView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(btnback))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(jLabel2)))
+                        .addGap(172, 172, 172)
+                        .addComponent(btnback)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,9 +96,9 @@ public class HistoryView extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnback)
-                .addGap(26, 26, 26))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -138,6 +151,6 @@ public class HistoryView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
-    private javax.swing.JTable tblGH;
+    private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 }

@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.border.Border;
-import game.subForm;
 import model.Game;
 import model.Message;
 import static model.Type.RESULT_GAME;
