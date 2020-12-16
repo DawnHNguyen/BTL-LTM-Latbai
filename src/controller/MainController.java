@@ -86,8 +86,10 @@ public class MainController {
                                 break;
                             case UPDATE_LIST_ONLINE:
                                 listUser = (ArrayList<Account>) result.getContent();
-                                homePageController.updateUsersOnline(listUser);
-                                System.out.println("update");
+                                if (!listUser.isEmpty()) {
+                                    homePageController.updateUsersOnline(listUser);
+                                    System.out.println("update");
+                                }
                                 break;
                             case INVITE_CHALLENGE:
                                 accountRecived = (Account) result.getContent();
