@@ -28,7 +28,7 @@ public class GameController {
     public GameController(Game game, Account account) {
         this.game = game;
         this.account = account;
-        gameLatBai = new GameLatBai(0, 0, game.getDebai());
+        gameLatBai = new GameLatBai(0, 0, game);
         gameLatBai.addCancelAcction(new CancelAction());
     }
 
@@ -40,14 +40,14 @@ public class GameController {
                     "I appear as part of the frame!!", "Customized Dialog",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (isAccept == 0) {
-                Message message = new Message(game, model.Type.CANCEL_GAME);
+                game.getPlayer1().setPoint(0);
+                Message message = new Message(game, model.Type.RESULT_GAME);
                 if (message instanceof Message) {
                     MainController.sendData(message);
-//                    HomePageController.setViewVisible();
+                    HomePageController.setViewVisible(true);
                 }
             }
         }
-
     }
 
 }

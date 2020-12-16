@@ -30,5 +30,5 @@ public enum Type {
     PLAYING,
     
     RANKING, 
-    CANCEL_GAME
+    RESULT_GAME
 }

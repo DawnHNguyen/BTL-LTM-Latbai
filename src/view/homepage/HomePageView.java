@@ -180,7 +180,6 @@ public class HomePageView extends javax.swing.JFrame {
                 model.addRow(acc.toObjects(rank++));
             }
         }
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
