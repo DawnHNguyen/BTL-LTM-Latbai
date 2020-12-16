@@ -30,5 +30,6 @@ public enum Type {
     PLAYING,
     
     RANKING, 
+    HISTORY_GAME,
     RESULT_GAME
 }
