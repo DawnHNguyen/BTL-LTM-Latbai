@@ -1,5 +1,7 @@
 package view.game;
 
+import controller.MainController;
+import controller.homepage.HomePageController;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -20,6 +22,9 @@ import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import game.subForm;
+import model.Game;
+import model.Message;
+import static model.Type.RESULT_GAME;
 
 public final class GameLatBai extends JFrame implements ActionListener {
 
@@ -54,12 +59,18 @@ public final class GameLatBai extends JFrame implements ActionListener {
     Container cn;
     Timer timer;
     Timer timer2;
+    private int score;
+    private int[][] debai;
+    private Game game;
 
-    public GameLatBai(int k, int score, int [][]debai) {
+    public GameLatBai(int k, int score, Game game) {
+        this.game = game;
+        this.score = score;
+        this.debai = game.getDebai();
         this.bt = new JButton[this.maxXY][this.maxXY];
         this.tick = new boolean[this.maxXY][this.maxXY];
         this.a = new int[this.maxXY][this.maxXY];
-        this.setTitle(" Nhóm 5 - Game Lật Bài");
+        this.setTitle("Nhóm 5 - Game Lật Bài");
         this.level = k;
         this.cn = this.init(k, score, debai);
         this.timer = new Timer(400, new ActionListener() {
@@ -69,14 +80,15 @@ public final class GameLatBai extends JFrame implements ActionListener {
             }
         });
         this.timer2 = new Timer(100, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ++GameLatBai.this.time;
                 GameLatBai.this.progressTime.setValue(GameLatBai.this.maxTime - GameLatBai.this.time);
                 if (GameLatBai.this.maxTime == GameLatBai.this.time) {
                     GameLatBai.this.timer2.stop();
+                    GameLatBai.this.score = Integer.valueOf(GameLatBai.this.score_bt.getText());
                     GameLatBai.this.showDialogNewGame("Hết thời gian.\nĐiểm: " + GameLatBai.this.score_bt.getText() + "\n" + "Bạn có muốn chơi lại không?", "Thông báo");
                 }
-
             }
         });
     }
@@ -102,10 +114,9 @@ public final class GameLatBai extends JFrame implements ActionListener {
             this.bt[this.X][this.Y].setIcon(this.getIcon(0));
             this.score_bt.setText(String.valueOf(Integer.parseInt(this.score_bt.getText()) - 10));
         }
-
     }
 
-    public Container init(int k, int score, int [][]debai) {
+    public Container init(int k, int score, int[][] debai) {
         this.time = 0;
         Container cn = this.getContentPane();
         this.pn = new JPanel();
@@ -157,10 +168,8 @@ public final class GameLatBai extends JFrame implements ActionListener {
             for (int j = 0; j < this.n; ++j) {
                 System.out.printf("%3d", this.a[i][j]);
             }
-
             System.out.println();
         }
-
         System.out.println("-----------------");
         System.out.println();
     }
@@ -175,26 +184,29 @@ public final class GameLatBai extends JFrame implements ActionListener {
 
     public void newGame() {
         this.dispose();
-//        new GameLatBai(0, 100, debai);
     }
 
     public void nextGame() {
         this.dispose();
-//        new GameLatBai(this.level + 1, Integer.parseInt(this.score_bt.getText()) + (this.maxTime - this.time) / 50);
     }
 
     public void showDialogNewGame(String message, String title) {
         int select = JOptionPane.showOptionDialog((Component) null, message, title, 0, 3, (Icon) null, (Object[]) null, (Object) null);
         if (select == 0) {
-            this.newGame();
+            this.cn = this.init(0, this.score, this.debai);
         } else {
-            System.exit(0);
+            this.game.getPlayer1().setPoint(this.score);
+            MainController.sendData(new Message(this.game, RESULT_GAME));
+            System.out.println("da gui ket qua");
+            HomePageController.setViewVisible(true);
+            this.dispose();
         }
-        
     }
-    public void addCancelAcction(ActionListener ah){
+
+    public void addCancelAcction(ActionListener ah) {
         out_bt.addActionListener(ah);
     }
+
     public void actionPerformed(ActionEvent e) {
 //        if (e.getSource() == out_bt) {
 //            form.setVisible(true);

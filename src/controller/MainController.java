@@ -5,15 +5,26 @@
  */
 package controller;
 
+import controller.auth.LoginController;
+import controller.auth.RegisterController;
+import controller.game.GameController;
+import controller.homepage.HomePageController;
+import controller.rank.RankController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import javax.swing.JFrame;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Account;
+import model.Game;
 import model.Message;
+import static model.Type.ACCEPT_CHALLENGE;
 import static model.Type.INVITE_CHALLENGE;
+import model.Type;
+import static model.Type.PLAYING;
+import static model.Type.REJECT_CHALLENGE;
+import view.game.GameLatBai;
 
 /**
  *
@@ -31,7 +42,93 @@ public class MainController {
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
 
+    private Account currentAccount;
+    private Account accountRecived;
+    private LoginController loginController;
+    private HomePageController homePageController;
+    private RegisterController registerController;
+    private RankController rankController;
+    private GameController gameController;
+    Runnable listenChallenge;
+    static Thread thread;
+
     public MainController() {
+        openConnection();
+        loginController = new LoginController();
+        listenChallenge = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Message result = null;
+                    result = receiveData();
+                    if (result instanceof Message) {
+                        switch (result.getType()) {
+                            case LOGIN_SUCCESS:
+                                currentAccount = (Account) result.getContent();
+                                loginController.setViewVisible(false);
+                                homePageController = new HomePageController(currentAccount);
+                                break;
+                            case LOGIN_FAIL:
+                                loginController.showMessage("User not available");
+                                break;
+                            case REGISTER_SUCCESS:
+                                currentAccount = (Account) result.getContent();
+                                registerController.showMessage("Register success");
+                                homePageController = new HomePageController(currentAccount);
+                                break;
+                            case REGISTER_FAIL:
+                                registerController.showMessage("Registern not success");
+                                break;
+                            case LIST_ONLINE:
+                                ArrayList<Account> listUser = (ArrayList<Account>) result.getContent();
+                                homePageController.reciveListUser(listUser);
+                                homePageController.displayUsers();
+                                break;
+                            case UPDATE_LIST_ONLINE:
+                                listUser = (ArrayList<Account>) result.getContent();
+                                homePageController.updateUsersOnline(listUser);
+                                System.out.println("update");
+                                break;
+                            case INVITE_CHALLENGE:
+                                accountRecived = (Account) result.getContent();
+                                int isAccept = homePageController.showConfirmDialog(accountRecived.getName() + " want to challege you in a game");
+                                if (isAccept == JOptionPane.YES_OPTION) {
+                                    Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
+                                    System.out.println("accept");
+                                    MainController.sendData(response);
+                                } else {
+                                    Message response = new Message(accountRecived, REJECT_CHALLENGE);
+                                    MainController.sendData(response);
+                                }
+                                break;
+                            case REJECT_CHALLENGE:
+                                accountRecived = (Account) result.getContent();
+                                homePageController.showMessage(accountRecived.getName() + " DONT WANT TO PLAY WITH YOU!");
+                                break;
+                            case PLAYING:
+                                accountRecived = (Account) result.getContent();
+                                homePageController.showMessage(accountRecived.getName() + " playing a game with someone else!");
+                                break;
+                            case ACCEPT_CHALLENGE:
+                                Game game = (Game) result.getContent();
+                                gameController = new GameController(game, currentAccount);
+                                break;
+                            case RANKING:
+                                listUser = (ArrayList<Account>) result.getContent();
+                                rankController = new RankController(currentAccount);
+                                rankController.reciveListUser(listUser);
+                                rankController.displayUsers();
+                                break;
+                        }
+                    }
+                }
+            }
+        };
+        thread = new Thread(listenChallenge);
+        thread.start();
+    }
+
+    public void openConnection() {
         try {
             mySocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(mySocket.getOutputStream());
@@ -40,6 +137,7 @@ public class MainController {
             ex.printStackTrace();
         }
     }
+
     public static boolean sendData(Message message) {
         try {
             oos.writeObject(message);

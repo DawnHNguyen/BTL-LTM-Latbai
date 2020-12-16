@@ -15,9 +15,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Account;
 import model.Message;
 import model.Type;
+import static model.Type.LIST_ONLINE;
 import view.auth.LoginView;
 import view.homepage.HomePageView;
 
@@ -33,49 +35,42 @@ public class HomePageController {
 
     public HomePageController(Account account) {
         this.account = account;
-        this.listUser = reciveListUser();
+        MainController.sendData(new Message(null, LIST_ONLINE));
+    }
+
+    public void displayUsers() {
         this.homePageView = new HomePageView(this.listUser, account);
         this.homePageView.setVisible(true);
-        this.homePageView.addLogoutAcction(new LogoutAction());
-        this.homePageView.addInviteAcction(new InviteAction());
-        this.homePageView.addRankingAcction(new RankingAction());
+        this.homePageView.setTable(listUser);
+        this.homePageView.addLogoutAction(new LogoutAction());
+        this.homePageView.addInviteAction(new InviteAction());
+        this.homePageView.addRankingAction(new RankingAction());
     }
 
-    public ArrayList<Account> reciveListUser() {
-        ArrayList<Account> listUser = new ArrayList<>();
-        try {
-            MainController.sendData(new Message(account, Type.LIST_ONLINE));
-            Message result = MainController.receiveData();
-            if (result instanceof Message) {
-                listUser = (ArrayList<Account>) result.getContent();
-            }
-            Collections.sort(listUser, new PointComparator());
-            return listUser;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public void updateUsersOnline(ArrayList<Account> listUser) {
+        this.listUser = listUser;
+        for(Account acc: listUser){
+            System.out.println(acc.getName()+ " acc "+ acc.getId());
         }
-        return listUser;
-    }
-
-    public static void setViewVisible() {
-        homePageView.setVisible(true);
-        homePageView.startThread();
-    }
-
-    class PointComparator implements Comparator<Account> {
-
-        @Override
-        public int compare(Account user1, Account user2) {
-            int point1 = user1.getPoint();
-            int point2 = user2.getPoint();
-            if (point1 == point2) {
-                return 0;
-            } else if (point1 < point2) {
-                return 1;
-            } else {
-                return -1;
-            }
+        if (listUser != null && homePageView != null) {
+            this.homePageView.setTable(listUser);
         }
+    }
+
+    public void reciveListUser(ArrayList<Account> listUser) {
+        this.listUser = listUser;
+    }
+
+    public static void setViewVisible(boolean isVisible) {
+        homePageView.setVisible(isVisible);
+    }
+
+    public void showMessage(String content) {
+        JOptionPane.showMessageDialog(homePageView, content);
+    }
+
+    public int showConfirmDialog(String content) {
+        return JOptionPane.showConfirmDialog(homePageView, content);
     }
 
     class LogoutAction implements ActionListener {
@@ -85,23 +80,31 @@ public class HomePageController {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
                 MainController.sendData(message);
-                LoginController.setViewVisible();
                 homePageView.dispose();
+                LoginController.setViewVisible(true);
             }
         }
     }
+
+//    class ReloadAction implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(ActionEvent ae) {
+//            Message message = new Message(account, model.Type.LIST_ONLINE);
+//            MainController.sendData(message);
+//        }
+//    }
 
     class InviteAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             Account acc = homePageView.getAccountSelected();
-            System.out.println("Moi "+acc.getId());
+            System.out.println("Moi " + acc.getId());
             Message message = new Message(acc, model.Type.CHALLENGE);
             if (message instanceof Message) {
                 MainController.sendData(message);
                 System.out.println("da gui");
-////                homePageView.dispose();
             }
         }
     }
@@ -111,9 +114,7 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             homePageView.setVisible(false);
-            homePageView.stopThread();
-            System.out.println("ok");
-            new RankController(account);
+            MainController.sendData(new Message(null, Type.RANKING));
         }
     }
 

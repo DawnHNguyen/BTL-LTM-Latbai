@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.border.Border;
-import game.subForm;
 public final class GameLatBai_2 extends JFrame implements ActionListener {
     int count = 0;
     int id;
@@ -77,7 +76,6 @@ public final class GameLatBai_2 extends JFrame implements ActionListener {
                     GameLatBai_2.this.timer2.stop();
                     GameLatBai_2.this.showDialogNewGame("Hết thời gian.\nĐiểm: " + GameLatBai_2.this.score_bt.getText() + "\n" + "Bạn có muốn chơi lại không?", "Thông báo");
                 }
-
             }
         });
     }
