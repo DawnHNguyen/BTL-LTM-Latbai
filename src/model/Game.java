@@ -78,7 +78,9 @@ public class Game implements Serializable {
         }
         return false;
     }
-
+    public Object[] toObjects(int stt) {
+        return new Object[]{stt, player1.getName(), player2.getName(), status,date};
+    }
     public int[][] createMatrix(int m, int n) {
         int[][] arr = new int[m][n];
         int N = m * n;

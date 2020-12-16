@@ -8,6 +8,7 @@ package controller;
 import controller.auth.LoginController;
 import controller.auth.RegisterController;
 import controller.game.GameController;
+import controller.history.HistoryController;
 import controller.homepage.HomePageController;
 import controller.rank.RankController;
 import java.io.IOException;
@@ -34,9 +35,9 @@ public class MainController {
 
     private static Socket mySocket;
     
-  //    private String serverHost = "192.168.43.57";
-   private String serverHost = "192.168.43.196";
-//    private String serverHost = "172.27.90.65";
+      private String serverHost = "192.168.43.57";
+//   private String serverHost = "192.168.43.196";
+//ivate String serverHost = "192.168.43.196";    private String serverHost = "172.27.90.65";
 //    private String serverHost = "172.19.201.17";
     private static int serverPort = 3000;
     private static ObjectOutputStream oos;
@@ -49,6 +50,7 @@ public class MainController {
     private RegisterController registerController;
     private RankController rankController;
     private GameController gameController;
+    private HistoryController historyController;
     Runnable listenChallenge;
     static Thread thread;
 
@@ -87,7 +89,7 @@ public class MainController {
                             case UPDATE_LIST_ONLINE:
                                 listUser = (ArrayList<Account>) result.getContent();
                                 if (!listUser.isEmpty()) {
-                                    homePageController.updateUsersOnline(listUser);
+                                      homePageController.updateUsersOnline(listUser);
                                     System.out.println("update");
                                 }
                                 break;
@@ -121,6 +123,12 @@ public class MainController {
                                 rankController.reciveListUser(listUser);
                                 rankController.displayUsers();
                                 break;
+                            case HISTORY_GAME:
+                                ArrayList<Game> historyGames = (ArrayList<Game>) result.getContent();
+                                historyController = new HistoryController(currentAccount);
+                                historyController.reciveListGame(historyGames);
+                                historyController.displayGame();
+                                break;   
                         }
                     }
                 }
