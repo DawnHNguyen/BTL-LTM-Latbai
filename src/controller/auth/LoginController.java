@@ -59,7 +59,8 @@ public class LoginController {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            new RegisterController();
+            RegisterController registerController = new RegisterController();
+            ClientController.setRegisterController(registerController);
         }
     }
 }

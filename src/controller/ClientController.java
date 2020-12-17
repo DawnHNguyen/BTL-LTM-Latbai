@@ -47,10 +47,10 @@ public class ClientController {
     private Account accountRecived;
     private Game game;
     private ArrayList<Account> listUser;
-    
+
     private LoginController loginController;
     private HomePageController homePageController;
-    private RegisterController registerController;
+    static private RegisterController registerController;
     private RankController rankController;
     private GameController gameController;
     private HistoryController historyController;
@@ -87,10 +87,8 @@ public class ClientController {
                                 break;
                             case LIST_ONLINE:
                                 listUser = (ArrayList<Account>) result.getContent();
-                                if (!listUser.isEmpty()) {
-                                    homePageController.reciveListUser(listUser);
-                                    homePageController.displayUsers();
-                                }
+                                homePageController.reciveListUser(listUser);
+                                homePageController.displayUsers();
                                 break;
                             case UPDATE_LIST_ONLINE:
                                 listUser = (ArrayList<Account>) result.getContent();
@@ -187,5 +185,9 @@ public class ClientController {
             return false;
         }
         return true;
+    }
+
+    public static void setRegisterController(RegisterController registerController) {
+        ClientController.registerController = registerController;
     }
 }
