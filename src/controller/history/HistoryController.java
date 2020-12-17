@@ -24,8 +24,7 @@ public class HistoryController {
     ArrayList<Game> listGame;
     Account account;
     public HistoryController(Account account) {
-        this.account = account;
-        
+        this.account = account;       
     }
     public void displayGame() {
         this.historyView = new HistoryView(this.listGame, account);
@@ -35,14 +34,13 @@ public class HistoryController {
     }
     public void reciveListGame(ArrayList<Game> listGame) {
         this.listGame = listGame;
-       
     }
     // quay về trang home
      class HomePageAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ah) {
-            
             historyView.setVisible(false);
+            HomePageController.setViewVisible(true);
         }
 
         

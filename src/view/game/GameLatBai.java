@@ -1,6 +1,6 @@
 package view.game;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.homepage.HomePageController;
 import java.awt.Color;
 import java.awt.Component;
@@ -200,7 +200,7 @@ public final class GameLatBai extends JFrame implements ActionListener {
             }if(this.game.getPlayer2().getId() == this.account.getId()){
                 this.game.getPlayer2().setPoint(this.score);
             }
-            MainController.sendData(new Message(this.game, RESULT_GAME));
+            ClientController.sendData(new Message(this.game, RESULT_GAME));
             System.out.println("da gui ket qua");
             HomePageController.setViewVisible(true);
             this.dispose();

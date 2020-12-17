@@ -5,7 +5,7 @@
  */
 package controller.rank;
 
-import controller.MainController;
+import controller.ClientController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,13 +17,15 @@ import view.rank.RankView;
 
 public class RankController {
     
-    private RankView rankView;
+    private static RankView rankView;
     ArrayList<Account> listUser;
     Account account;
     
     public RankController(Account account) {
         this.account = account;
-        
+    }
+    public static void setViewVisible(boolean isVisible) {
+        rankView.setVisible(isVisible);
     }
     public void displayUsers() {
         this.rankView = new RankView(this.listUser, account);
@@ -53,7 +55,6 @@ public class RankController {
         }
     }
     
-    
     class HistoryAction implements ActionListener {
 
         @Override
@@ -63,7 +64,7 @@ public class RankController {
             Message message = new Message(acc, model.Type.HISTORY_GAME);
             
             if (message instanceof Message) {
-                MainController.sendData(message);
+                ClientController.sendData(message);
                 System.out.println("da gui");
             }
         }  
@@ -72,8 +73,7 @@ public class RankController {
     // quay về trang home
      class HomeAction implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent ah) {
-           
+        public void actionPerformed(ActionEvent ah) { 
             rankView.setVisible(false);
         }
     }

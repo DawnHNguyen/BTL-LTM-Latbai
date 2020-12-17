@@ -5,7 +5,7 @@
  */
 package controller.homepage;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.auth.LoginController;
 import controller.rank.RankController;
 import java.awt.event.ActionEvent;
@@ -35,7 +35,7 @@ public class HomePageController {
 
     public HomePageController(Account account) {
         this.account = account;
-        MainController.sendData(new Message(null, LIST_ONLINE));
+        ClientController.sendData(new Message(null, LIST_ONLINE));
     }
 
     public void displayUsers() {
@@ -79,7 +79,7 @@ public class HomePageController {
         public void actionPerformed(ActionEvent ae) {
             Message message = new Message(account, model.Type.LOGOUT);
             if (message instanceof Message) {
-                MainController.sendData(message);
+                ClientController.sendData(message);
                 homePageView.dispose();
                 LoginController.setViewVisible(true);
             }
@@ -94,7 +94,7 @@ public class HomePageController {
             System.out.println("Moi " + acc.getId());
             Message message = new Message(acc, model.Type.CHALLENGE);
             if (message instanceof Message) {
-                MainController.sendData(message);
+                ClientController.sendData(message);
                 System.out.println("da gui");
             }
         }
@@ -105,7 +105,7 @@ public class HomePageController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             homePageView.setVisible(false);
-            MainController.sendData(new Message(null, Type.RANKING));
+            ClientController.sendData(new Message(null, Type.RANKING));
         }
     }
 

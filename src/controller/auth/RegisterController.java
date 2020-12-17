@@ -5,7 +5,7 @@
  */
 package controller.auth;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +22,7 @@ public class RegisterController{
         this.registerView = new RegisterView();
         this.registerView.setVisible(true);
         this.registerView.addRegisterAction(new RegisterAction());
+        this.registerView.addBackAction(new BackAction());
     }
     public void showMessage(String content) {
         JOptionPane.showMessageDialog(registerView, content);
@@ -37,11 +38,19 @@ public class RegisterController{
                 Account account = registerView.getAccount();
                 Message message = new Message(account, model.Type.REGISTER);
                 if (message instanceof Message) {
-                    MainController.sendData(message);
+                    ClientController.sendData(message);
                 } else {
                     JOptionPane.showMessageDialog(registerView, "Check your login!!");
                 }
             }
+        }
+    }
+    class BackAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            LoginController.setViewVisible(true);
+            registerView.setVisible(false);
         }
     }
 }

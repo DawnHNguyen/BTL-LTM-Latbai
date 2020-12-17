@@ -5,7 +5,7 @@
  */
 package controller.game;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +47,7 @@ public class GameController {
                 game.getPlayer1().setPoint(0);
                 Message message = new Message(game, model.Type.RESULT_GAME);
                 if (message instanceof Message) {
-                    MainController.sendData(message);
+                    ClientController.sendData(message);
                     HomePageController.setViewVisible(true);
                 }
             }

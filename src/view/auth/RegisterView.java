@@ -5,7 +5,7 @@
  */
 package view.auth;
 
-import controller.MainController;
+import controller.ClientController;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Account;
@@ -147,6 +147,9 @@ public class RegisterView extends javax.swing.JFrame {
 
     public void addRegisterAction(ActionListener al){
         btnRegister.addActionListener(al);
+    }
+    public void addBackAction(ActionListener al){
+        btnBack.addActionListener(al);
     }
     public boolean checkPassword(){
         String pass0 = new String(jtfPassword.getPassword());

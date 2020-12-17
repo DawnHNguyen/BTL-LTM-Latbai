@@ -32,7 +32,7 @@ import view.game.MessageView;
  *
  * @author dolong
  */
-public class MainController {
+public class ClientController {
 
     private static Socket mySocket;
 //    private String serverHost = "192.168.43.57";
@@ -46,6 +46,8 @@ public class MainController {
     private Account currentAccount;
     private Account accountRecived;
     private Game game;
+    private ArrayList<Account> listUser;
+    
     private LoginController loginController;
     private HomePageController homePageController;
     private RegisterController registerController;
@@ -55,7 +57,7 @@ public class MainController {
     Runnable listenChallenge;
     static Thread thread;
 
-    public MainController() {
+    public ClientController() {
         openConnection();
         loginController = new LoginController();
         listenChallenge = new Runnable() {
@@ -64,6 +66,7 @@ public class MainController {
                 while (true) {
                     Message result = null;
                     result = receiveData();
+                    System.out.println(result.getType());
                     if (result instanceof Message) {
                         switch (result.getType()) {
                             case LOGIN_SUCCESS:
@@ -83,15 +86,16 @@ public class MainController {
                                 registerController.showMessage("Register not success");
                                 break;
                             case LIST_ONLINE:
-                                ArrayList<Account> listUser = (ArrayList<Account>) result.getContent();
-                                homePageController.reciveListUser(listUser);
-                                homePageController.displayUsers();
+                                listUser = (ArrayList<Account>) result.getContent();
+                                if (!listUser.isEmpty()) {
+                                    homePageController.reciveListUser(listUser);
+                                    homePageController.displayUsers();
+                                }
                                 break;
                             case UPDATE_LIST_ONLINE:
                                 listUser = (ArrayList<Account>) result.getContent();
                                 if (!listUser.isEmpty()) {
                                     homePageController.updateUsersOnline(listUser);
-                                    System.out.println("update");
                                 }
                                 break;
                             case INVITE_CHALLENGE:
@@ -99,11 +103,10 @@ public class MainController {
                                 int isAccept = homePageController.showConfirmDialog(accountRecived.getName() + " want to challege you in a game");
                                 if (isAccept == JOptionPane.YES_OPTION) {
                                     Message response = new Message(accountRecived, ACCEPT_CHALLENGE);
-                                    System.out.println("accept");
-                                    MainController.sendData(response);
+                                    ClientController.sendData(response);
                                 } else {
                                     Message response = new Message(accountRecived, REJECT_CHALLENGE);
-                                    MainController.sendData(response);
+                                    ClientController.sendData(response);
                                 }
                                 break;
                             case REJECT_CHALLENGE:
@@ -129,9 +132,10 @@ public class MainController {
                                 historyController = new HistoryController(currentAccount);
                                 historyController.reciveListGame(historyGames);
                                 historyController.displayGame();
+                                rankController.setViewVisible(false);
                                 break;
                             case RESULT_GAME:
-                                System.out.println("content "+ (String) result.getContent());
+                                System.out.println("content " + (String) result.getContent());
                                 gameController.showMessage((String) result.getContent());
                                 break;
                         }

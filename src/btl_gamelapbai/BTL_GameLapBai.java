@@ -5,7 +5,7 @@
  */
 package btl_gamelapbai;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.auth.LoginController;
 import view.auth.LoginView;
 
@@ -19,8 +19,7 @@ public class BTL_GameLapBai {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainController mainController = new MainController();
-//        LoginController control = new LoginController();
+        ClientController mainController = new ClientController();
     }
     
 }

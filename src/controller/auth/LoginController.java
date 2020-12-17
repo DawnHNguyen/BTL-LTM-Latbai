@@ -5,7 +5,7 @@
  */
 package controller.auth;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.homepage.HomePageController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +39,6 @@ public class LoginController {
 
     public void showMessage(String content) {
         JOptionPane.showMessageDialog(loginView, content);
-
     }
 
     class LoginAction implements ActionListener {
@@ -49,7 +48,7 @@ public class LoginController {
             Account account = loginView.getAccount();
             Message message = new Message(account, model.Type.LOGIN);
             if (message instanceof Message) {
-                MainController.sendData(message);
+                ClientController.sendData(message);
             } else {
                 JOptionPane.showMessageDialog(loginView, "Check your login!!");
             }

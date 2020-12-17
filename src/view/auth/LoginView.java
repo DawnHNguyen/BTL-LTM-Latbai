@@ -5,7 +5,7 @@
  */
 package view.auth;
 
-import controller.MainController;
+import controller.ClientController;
 import controller.auth.RegisterController;
 import view.auth.RegisterView;
 import java.awt.event.ActionListener;
