@@ -13,7 +13,7 @@ import view.ServerView;
  *
  * @author dolong
  */
-public class BTL_GameLapBai {
+    public class BTL_GameLapBai {
 
     public static void main(String[] args) {
         Thread thread = new Thread(new ThreadServer());

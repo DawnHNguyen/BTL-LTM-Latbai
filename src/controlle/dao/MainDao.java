@@ -19,15 +19,15 @@ public class MainDao {
     private String jdbcUsername = "root" ;
     private String jdbcPassword ="123456" ;
     public MainDao(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver") ;
-            conn =DriverManager.getConnection(jdbcURL,
-                    jdbcUsername, jdbcPassword);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-        }
+//        try{
+//            Class.forName("com.mysql.cj.jdbc.Driver") ;
+//            conn =DriverManager.getConnection(jdbcURL,
+//                    jdbcUsername, jdbcPassword);
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//        }catch(ClassNotFoundException e){
+//            e.printStackTrace();
+//        }
     }
       public Connection getConnection(){
         return conn;
