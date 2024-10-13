@@ -39,7 +39,7 @@ public class ClientController {
 //  pivate String serverHost = "192.168.43.196";    
     private String serverHost = "localhost";
 //    private String serverHost = "172.19.201.17";
-    private static int serverPort = 3000;
+    private static int serverPort = 3001;
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
 
