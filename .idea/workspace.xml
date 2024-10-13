@@ -5,8 +5,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="344ac79b-cd2e-4cc7-9e4c-d610fcbed060" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/btl_gamelapbai/BTL_GameLapBai.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/btl_gamelapbai/BTL_GameLapBai.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/ClientController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController$LoginAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController$LoginAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController$RegisterAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController$RegisterAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController$BackAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController$BackAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController$RegisterAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController$RegisterAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/auth/RegisterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/game/GameController$CancelAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/game/GameController$CancelAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/game/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/game/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/history/HistoryController$HomePageAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/history/HistoryController$HomePageAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/history/HistoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/history/HistoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$InviteAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$InviteAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$LogoutAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$LogoutAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$RankingAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController$RankingAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/homepage/HomePageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$HistoryAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$HistoryAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$HomeAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$HomeAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$PointComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController$PointComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/controller/rank/RankController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/model/Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/LoginView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/LoginView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/auth/RegisterView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/GameLatBai_2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/MessageView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/game/MessageView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/history/HistoryView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/history/HistoryView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/history/HistoryView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/history/HistoryView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/homepage/HomePageView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/rank/RankView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/rank/RankView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/rank/RankView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BTL_GameLatBai/view/rank/RankView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +71,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="1jibHQC0f8y42pFm1cz9daPB5xG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -33,7 +83,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.BTL_GameLapBai.executor": "Run",
-    "git-widget-placeholder": "client"
+    "git-widget-placeholder": "client",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
   <component name="RunManager">

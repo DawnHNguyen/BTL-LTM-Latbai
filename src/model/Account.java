@@ -18,7 +18,7 @@ public class Account implements Serializable {
     private String passWord;
     private String name;
     private int point;
-    private String status;
+    private int status;
     private int id;
 
     public Account() {
@@ -67,11 +67,11 @@ public class Account implements Serializable {
         this.point = point;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
